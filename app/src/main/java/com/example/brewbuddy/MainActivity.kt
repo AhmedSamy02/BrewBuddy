@@ -11,5 +11,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         
         // TODO: Setup navigation and fragments
+        // Done
     }
 }
