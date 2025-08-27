@@ -73,6 +73,7 @@ class MainFragment : Fragment() {
             when (it.itemId) {
                 R.id.main_menu_logoutBtn -> {
                     viewModel.logout()
+                    findNavController().navigate(R.id.toEnterNameFragment)
                     true
                 }
 
