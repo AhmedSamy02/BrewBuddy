@@ -25,7 +25,7 @@ import com.example.brewbuddy.presentation.viewmodel.EnterNameViewModel
 
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
-    private lateinit var viewModel : EnterNameViewModel
+    private lateinit var viewModel: EnterNameViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +45,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-       /// val sharedPref = requireActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE)
+        /// val sharedPref = requireActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE)
         val repository = UserRepositoryImpl(requireContext())
         val saveNameUseCase = SaveUserNameUseCase(repository)
         val getNameUseCase = GetUserNameUseCase(repository)
@@ -68,14 +68,27 @@ class MainFragment : Fragment() {
 //        binding.tvMainAppBarTitle.text="Good day, $userName"
 
 
+        val topAppBar = binding.mainAppBar
+        topAppBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.main_menu_logoutBtn -> {
+                    viewModel.logout()
+                    true
+                }
 
+                else -> {
+                    Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT)
+                    false
+                }
+            }
+        }
         val bottomBar = binding.bottomNavigation
         bottomBar.setOnItemSelectedListener {
-             when (it.itemId) {
+            when (it.itemId) {
                 R.id.home_nav_bar_item -> {
-                    val getName = viewModel.userName.value?: "Guest"
+                    val getName = viewModel.userName.value ?: "Guest"
                     // Todo: Add here user name
-                    binding.tvMainAppBarTitle.text="Good day, $getName"
+                    binding.tvMainAppBarTitle.text = "Good day, $getName"
                     childFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment_container_view, HomeFragment())
                         .commit()
@@ -84,7 +97,7 @@ class MainFragment : Fragment() {
 
 
                 R.id.drink_menu_nav_bar_item -> {
-                    binding.tvMainAppBarTitle.text="What would you like to drink today?"
+                    binding.tvMainAppBarTitle.text = "What would you like to drink today?"
                     childFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment_container_view, DrinkMenuFragment())
                         .commit()
@@ -92,21 +105,20 @@ class MainFragment : Fragment() {
                 }
 
                 R.id.orders_nav_bar_item -> {
-                    binding.tvMainAppBarTitle.text="Your orders"
+                    binding.tvMainAppBarTitle.text = "Your orders"
                     childFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment_container_view, OrderFragment())
                         .commit()
                     true
                 }
 
-                R.id.favorites_nav_bar_item ->{
-                    binding.tvMainAppBarTitle.text="Your favorite drinks to lighten up your day"
+                R.id.favorites_nav_bar_item -> {
+                    binding.tvMainAppBarTitle.text = "Your favorite drinks to lighten up your day"
                     childFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment_container_view, FavoritesFragment())
                         .commit()
                     true
                 }
-
 
 
                 else -> true
@@ -116,13 +128,15 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.main_menu_logoutBtn ->{
+        return when (item.itemId) {
+            R.id.main_menu_logoutBtn -> {
                 viewModel.logout()
-                Toast.makeText(requireContext(),"Logged out successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT)
+                    .show()
                 findNavController().navigate(R.id.toEnterNameFragment)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
