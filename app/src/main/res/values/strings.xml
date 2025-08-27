@@ -18,4 +18,12 @@
     <string name="main_menu_logout_item">Logout</string>
     <string name="main_menu_more_item">More</string>
     <string name="main_menu_notifications">Notifications</string>
+    <string name="saved_to_favorites">Saved to Favorites</string>
+    <string name="coffee_hot">coffee hot</string>
+    <string name="coffee_cold">coffee_cold</string>
+    <string name="back">back</string>
+    <string name="favorite">favorite</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="iced_coffee_sweet_heaven">Iced Coffee Sweet Heaven</string>
+    <string name="double_espresso_with_condensed_milk_served_cold">Double espresso with condensed milk, served cold</string>
 </resources>
