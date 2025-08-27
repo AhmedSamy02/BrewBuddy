@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
+<fragment
+    android:id="@+id/welcomeFragment"
+    android:name="com.example.brewbuddy.presentation.screens.Welcome.WelcomeFragment"
+    android:label="welcome">
+    <action
+        android:id="@+id/toEnterNameFragment"
+        app:destination="@id/enterNameFragment"/>
+    <action
+        android:id="@+id/toMainFragment"
+        app:destination="@id/MainFragment"/>
+    </fragment>
 
+    <fragment
+        android:id="@+id/enterNameFragment"
+        android:name="com.example.brewbuddy.presentation.screens.entername.EnterNameFragment"
+        android:label="Enter Name">
+        <action
+            android:id="@+id/toMainFragment"
+            app:destination="@id/MainFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/MainFragment"
+        android:name="com.example.brewbuddy.presentation.screens.MainFragment"
+        android:label="MainFragment">
+        </fragment>
 </navigation>

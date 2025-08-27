@@ -58,6 +58,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     ksp(libs.androidx.room.compiler.v261)
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)

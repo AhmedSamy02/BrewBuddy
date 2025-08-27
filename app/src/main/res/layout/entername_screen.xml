@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main"
+    tools:context=".presentation.screens.entername.EnterNameFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/welcome_image"
+            android:background="@drawable/top_image_shape"
+            android:clipToOutline="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@drawable/top_image_shape"
+            android:clipToOutline="true"/>
+    </FrameLayout>
+   <LinearLayout
+       android:id="@+id/enterNameBox"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:background="@drawable/rounded_box"
+
+       android:paddingTop="80dp"
+       android:paddingBottom="60dp"
+       android:paddingRight="20dp"
+       android:paddingLeft="20dp"
+
+
+       android:elevation="6dp"
+       android:layout_centerInParent="true">
+
+       <TextView
+            android:id="@+id/enterNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Enter Your Name:"
+            android:textSize="20sp"
+            android:fontFamily="@font/inter"
+            android:textStyle="bold"
+            android:textColor="@color/secondary"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="12dp"/>
+        <EditText
+        android:id="@+id/enterNameEditText"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter name"
+        android:padding="10dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="16dp"/>
+    <Button
+        android:id="@+id/saveNameButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:backgroundTint="#6F4E37"
+        android:textColor="@android:color/white"
+        android:padding="10dp"/>
+    </LinearLayout>
+
+    <ImageView
+    android:id="@+id/coffeImage"
+    android:layout_width="202dp"
+    android:layout_height="270px"
+    android:src="@drawable/coffe"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+    android:layout_margin="16dp"
+    android:scaleType="centerCrop"
+    />
+
+    <ImageView
+        android:id="@+id/chocolateImage"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:src="@drawable/chocolate"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:scaleType="centerCrop"
+
+       />
+</RelativeLayout>
