@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.brewbuddy.R
 import com.example.brewbuddy.data.repository.impl.UserRepositoryImpl
+import com.example.brewbuddy.domain.usecase.DeleteUserNameUseCase
 import com.example.brewbuddy.domain.usecase.GetUserNameUseCase
 import com.example.brewbuddy.domain.usecase.SaveUserNameUseCase
 import com.example.brewbuddy.presentation.viewmodel.EnterNameViewModel
@@ -41,8 +42,10 @@ class EnterNameFragment : Fragment() {
         val repository = UserRepositoryImpl(requireContext())
         val saveNameUseCase = SaveUserNameUseCase(repository)
         val getNameUseCase = GetUserNameUseCase(repository)
+        val deleteUserNameUseCase = DeleteUserNameUseCase(repository)
 
-        viewModel = EnterNameViewModel(saveNameUseCase, getNameUseCase)
+
+        viewModel = EnterNameViewModel(saveNameUseCase, getNameUseCase,deleteUserNameUseCase)
 
 
         val enterNameEditText = view.findViewById<EditText>(R.id.enterNameEditText)

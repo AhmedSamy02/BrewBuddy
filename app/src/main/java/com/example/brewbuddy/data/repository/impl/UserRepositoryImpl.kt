@@ -28,4 +28,10 @@ class UserRepositoryImpl(context: Context) : UserRepository {
             prefs[USER_NAME]
         }
     }
+
+    override suspend fun deleteUserName() {
+        dataStore.edit { prefs->
+            prefs.remove( USER_NAME)
+        }
+    }
 }

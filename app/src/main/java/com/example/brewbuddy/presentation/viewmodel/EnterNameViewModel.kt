@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.brewbuddy.domain.usecase.DeleteUserNameUseCase
 import com.example.brewbuddy.domain.usecase.GetUserNameUseCase
 import com.example.brewbuddy.domain.usecase.SaveUserNameUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class EnterNameViewModel(
     private val saveUserNameUseCase: SaveUserNameUseCase,
-    private  val getUserNameUseCase: GetUserNameUseCase
+    private  val getUserNameUseCase: GetUserNameUseCase,
+    private val deleteUserNameUseCase: DeleteUserNameUseCase
 ) : ViewModel(){
 
     private val _userName = MutableStateFlow<String?>(null)
@@ -30,5 +32,13 @@ class EnterNameViewModel(
                 _userName.value = name
             }
         }
+
     }
+    fun logout(){
+        viewModelScope.launch {
+            deleteUserNameUseCase()
+            _userName.value=null
+        }
+    }
+
 }

@@ -27,5 +27,8 @@
         android:id="@+id/MainFragment"
         android:name="com.example.brewbuddy.presentation.screens.MainFragment"
         android:label="MainFragment">
+        <action
+            android:id="@+id/toEnterNameFragment"
+            app:destination="@id/enterNameFragment"/>
         </fragment>
 </navigation>
