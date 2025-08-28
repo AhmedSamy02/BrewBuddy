@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/main"
     android:orientation="vertical"
-    android:paddingHorizontal="40dp"
     tools:context=".presentation.screens.home.HomeFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="162dp"
         android:layout_marginVertical="28dp"
+        android:layout_marginHorizontal="40dp"
         app:cardBackgroundColor="@color/secondary"
         app:cardCornerRadius="16dp">
 
@@ -98,14 +98,32 @@
         android:textColor="@color/secondary"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginHorizontal="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginVertical="24dp"
-        android:orientation="horizontal" />
+        android:layout_marginVertical="24dp">
+
+        <ProgressBar
+            android:id="@+id/recommendation_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/secondary"
+            android:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_week_recommendations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone" />
+    </FrameLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -114,12 +132,15 @@
         android:textColor="@color/secondary"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginHorizontal="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="match_parent"
         android:layout_height="162dp"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="18dp"
         android:scaleType="centerCrop"
         android:src="@drawable/introducing_menu"
