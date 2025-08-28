@@ -25,7 +25,7 @@ object UseCaseModule {
     }
 
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun  provideFavoriteUseCase(
         addFavoriteUseCase :AddFavoriteUseCase,
         removeFavoriteUseCase :RemoveFavoriteUseCase ,
