@@ -53,9 +53,10 @@ class FavoritesFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.favorites.collectLatest { list ->
                 adapter.submitList(list)
-                binding.rvFavorites.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+                binding.rvFavorites.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
             }
         }
+
 
         // Observe UI messages
         viewLifecycleOwner.lifecycleScope.launch {
