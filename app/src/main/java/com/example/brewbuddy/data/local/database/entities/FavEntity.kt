@@ -8,7 +8,7 @@ data class FavEntity(
     @PrimaryKey val coffeeId: Int,
     val title: String,
     val image: String?,
-    val priceCents: Int,
+    val priceCents: Double,
     val isHot: Boolean
 
 )
