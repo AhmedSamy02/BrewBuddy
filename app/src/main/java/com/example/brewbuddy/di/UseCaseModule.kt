@@ -5,14 +5,16 @@ import com.example.brewbuddy.domain.usecase.GetCoffeesByCategoryUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object UseCaseModule {
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideGetCoffeesByCategoryUseCase(repository: CoffeeRepository): GetCoffeesByCategoryUseCase{
         return GetCoffeesByCategoryUseCase(repository)
     }
