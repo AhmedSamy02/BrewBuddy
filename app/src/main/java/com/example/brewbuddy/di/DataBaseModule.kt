@@ -11,8 +11,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import com.example.brewbuddy.data.local.database.BrewBuddyDatabase
 import com.example.brewbuddy.data.local.database.dao.FavoritesDao
-import com.example.brewbuddy.data.repository.FavoritesRepositoryImpl
-import com.example.brewbuddy.domain.repository.FavoritesRepository
 import javax.inject.Singleton
 
 @Module

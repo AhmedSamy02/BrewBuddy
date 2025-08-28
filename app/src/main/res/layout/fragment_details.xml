@@ -44,7 +44,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_nav_bar_favorite_selector"
+                android:background="@drawable/favorite_selector"
                 android:contentDescription="Favorite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

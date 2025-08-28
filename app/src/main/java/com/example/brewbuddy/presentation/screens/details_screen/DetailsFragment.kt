@@ -58,6 +58,10 @@ class DetailsFragment : Fragment() {
         binding.closeBtn.setOnClickListener {
             findNavController().navigateUp()
         }
+        
+        binding.favouriteBtn.setOnClickListener {
+            viewModel.toggleFavorite()
+        }
     }
 
     private fun observeViewModel() {
@@ -79,6 +83,9 @@ class DetailsFragment : Fragment() {
             binding.productPrice.text = "Rp ${String.format("%.0f", coffee.price)}"
             // You would set the image here using an image loading library like Glide or Coil
         }
+        
+        // Update favorite button state
+        binding.favouriteBtn.isSelected = state.isFavorite
         
         // Handle navigation to payment
         if (state.shouldNavigateToPayment) {
@@ -108,15 +115,14 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    // This is a sample coffee for demonstration
-    // In a real app, you would receive this through navigation arguments
+
     private fun setSampleCoffee() {
         val sampleCoffee = Coffee(
             id = 1,
             title = "Iced Coffee Sweet Heaven",
             description = "Double espresso with condensed milk, served cold",
             ingredients = listOf("Espresso", "Condensed Milk", "Ice"),
-            image = "sample_image_url",
+            image = "https://images.unsplash.com/photo-1532004491497-ba35c367d634?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             price = 20000.0,
             category = CoffeeCategory.COLD,
             isFavorite = false
