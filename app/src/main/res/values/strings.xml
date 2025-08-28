@@ -26,4 +26,6 @@
     <string name="weeks_recommendation_text">This week’s recommendations</string>
     <string name="weeks_recommendation_image_description">Product Image</string>
     <string name="what_s_in_the_shop_text">What\'s in the shop</string>
+    <string name="what_s_new_in_the_shop_content_description">What\'s new</string>
+    <string name="introduction_our_new_menu">Introduction our new menu</string>
 </resources>

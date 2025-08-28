@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.brewbuddy.R
 import com.example.brewbuddy.databinding.FragmentHomeBinding
+import com.example.brewbuddy.presentation.screens.drink_menu.DrinkMenuFragment
 import com.example.brewbuddy.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +21,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         viewModel.isLoadingBestSeller.observe(this) { loading ->
             if (loading) {
                 binding.bestSellerProgressBar.visibility = View.VISIBLE
@@ -61,6 +63,15 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.cvIntroductionNewMenu.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main_fragment_container_view, DrinkMenuFragment())
+                .commit()
+        }
     }
 
 }
