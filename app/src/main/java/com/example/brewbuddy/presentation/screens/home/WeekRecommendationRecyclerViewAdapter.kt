@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
@@ -15,7 +16,9 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.example.brewbuddy.R
 import com.example.brewbuddy.domain.model.Coffee
 
-class WeekRecommendationRecyclerViewAdapter(private val dataSet: List<Coffee>) :
+class WeekRecommendationRecyclerViewAdapter(
+    private val dataSet: List<Coffee>, private val onItemClick: (Coffee) -> Unit
+) :
     RecyclerView.Adapter<WeekRecommendationRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -36,10 +39,9 @@ class WeekRecommendationRecyclerViewAdapter(private val dataSet: List<Coffee>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val item = dataSet[position]
         viewHolder.titleTv.text = item.title
-        viewHolder.priceTv.text = "Rp ${String.format("%.3f",item.price)}"
+        viewHolder.priceTv.text = "Rp ${String.format("%.3f", item.price)}"
         viewHolder.card.setOnClickListener {
-            // TODO Add navigation to details
-
+            onItemClick(item)
         }
         Glide.with(viewHolder.itemView)
             .load(item.image)

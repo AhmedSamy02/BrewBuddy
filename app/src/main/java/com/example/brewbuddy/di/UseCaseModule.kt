@@ -22,28 +22,33 @@ import javax.inject.Singleton
 object UseCaseModule {
     @Provides
     @ViewModelScoped
-    fun provideGetCoffeesByCategoryUseCase(repository: CoffeeRepository): GetCoffeesByCategoryUseCase{
+    fun provideGetCoffeesByCategoryUseCase(repository: CoffeeRepository): GetCoffeesByCategoryUseCase {
         return GetCoffeesByCategoryUseCase(repository)
     }
 
     @Provides
     @ViewModelScoped
-    fun  provideFavoriteUseCase(
-        addFavoriteUseCase :AddFavoriteUseCase,
-        removeFavoriteUseCase :RemoveFavoriteUseCase ,
-        getFavoriteUseCase : GetFavoriteUseCase
-    ): FavoriteUseCase{
+    fun provideFavoriteUseCase(
+        addFavoriteUseCase: AddFavoriteUseCase,
+        removeFavoriteUseCase: RemoveFavoriteUseCase,
+        getFavoriteUseCase: GetFavoriteUseCase
+    ): FavoriteUseCase {
         return FavoriteUseCase(
-            addFavoriteUseCase =addFavoriteUseCase,
-            removeFavoriteUseCase = removeFavoriteUseCase ,
-            getFavoriteUseCase = getFavoriteUseCase ,
+            addFavoriteUseCase = addFavoriteUseCase,
+            removeFavoriteUseCase = removeFavoriteUseCase,
+            getFavoriteUseCase = getFavoriteUseCase,
         )
-    fun provideGetBestSellerCoffeeUseCase(repository: CoffeeRepository): GetBestSellerCoffeeUseCase{
-        return GetBestSellerCoffeeUseCase(repository)
     }
+
     @Provides
     @ViewModelScoped
-    fun provideGetWeekRecommendationUseCase(repository: CoffeeRepository): GetWeekRecommendationUseCase{
+    fun provideGetBestSellerCoffeeUseCase(repository: CoffeeRepository): GetBestSellerCoffeeUseCase {
+        return GetBestSellerCoffeeUseCase(repository)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetWeekRecommendationUseCase(repository: CoffeeRepository): GetWeekRecommendationUseCase {
         return GetWeekRecommendationUseCase(repository)
     }
 }
