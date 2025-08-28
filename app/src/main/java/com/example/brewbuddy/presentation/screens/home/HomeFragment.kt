@@ -25,7 +25,15 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.isLoadingBestSeller.observe(this) { loading ->
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        viewModel.isLoadingBestSeller.observe(viewLifecycleOwner) { loading ->
             if (loading) {
                 binding.bestSellerProgressBar.visibility = View.VISIBLE
                 binding.clBestSellerData.visibility = View.GONE
@@ -42,7 +50,8 @@ class HomeFragment : Fragment() {
                     .into(binding.bestSellerIv)
             }
         }
-        viewModel.isLoadingRecommendations.observe(this) { loading ->
+
+        viewModel.isLoadingRecommendations.observe(viewLifecycleOwner) { loading ->
             if (loading) {
                 binding.recommendationProgressBar.visibility = View.VISIBLE
                 binding.rvWeekRecommendations.visibility = View.GONE
@@ -50,7 +59,7 @@ class HomeFragment : Fragment() {
                 binding.recommendationProgressBar.visibility = View.GONE
                 binding.rvWeekRecommendations.visibility = View.VISIBLE
                 val adapter =
-                    WeekRecommendationRecyclerViewAdapter(viewModel.uiState.value.recommendations){
+                    WeekRecommendationRecyclerViewAdapter(viewModel.uiState.value.recommendations) {
                         val action = MainFragmentDirections.actionMainFragmentToDetailsFragment(it)
                         findNavController().navigate(action)
                     }
@@ -61,13 +70,6 @@ class HomeFragment : Fragment() {
             }
 
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -77,6 +79,11 @@ class HomeFragment : Fragment() {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main_fragment_container_view, DrinkMenuFragment())
                 .commit()
+        }
+        binding.cvBestSeller.setOnClickListener {
+            val action =
+                MainFragmentDirections.actionMainFragmentToDetailsFragment(viewModel.uiState.value.bestSeller!!)
+            findNavController().navigate(action)
         }
     }
 

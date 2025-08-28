@@ -1,5 +1,6 @@
 package com.example.brewbuddy.data.repository.impl
 
+import android.util.Log
 import com.example.brewbuddy.data.remote.api.CoffeeApiService
 import com.example.brewbuddy.data.remote.dto.CoffeeDto
 import com.example.brewbuddy.domain.model.Coffee
@@ -62,7 +63,7 @@ class CoffeeRepositoryImpl @Inject constructor(
 
     private suspend fun getAllCoffees(): List<CoffeeDto> {
         if(icedData.isEmpty()){
-            icedData = coffeeApiService.getHotCoffees()
+            icedData = coffeeApiService.getIcedCoffees()
         }
         if(hotData.isEmpty()){
             hotData = coffeeApiService.getHotCoffees()
