@@ -39,9 +39,9 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setup RecyclerView
+
         adapter = FavoritesAdapter { fav ->
-            viewModel.deleteFavorite(fav) // Delete from Room
+            viewModel.deleteFavorite(fav)
         }
 
         binding.rvFavorites.apply {
@@ -49,7 +49,7 @@ class FavoritesFragment : Fragment() {
             adapter = this@FavoritesFragment.adapter
         }
 
-        // Observe favorites from Room (local database)
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.favorites.collectLatest { list ->
                 adapter.submitList(list)
@@ -58,7 +58,7 @@ class FavoritesFragment : Fragment() {
         }
 
 
-        // Observe UI messages
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collectLatest { state ->
                 state.errorMessage?.let {
