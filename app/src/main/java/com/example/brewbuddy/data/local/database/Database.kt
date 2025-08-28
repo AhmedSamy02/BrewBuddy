@@ -7,7 +7,7 @@ import com.example.brewbuddy.data.local.database.entities.FavEntity
 
 @Database(
     entities = [FavEntity::class,],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class BrewBuddyDatabase : RoomDatabase() {
