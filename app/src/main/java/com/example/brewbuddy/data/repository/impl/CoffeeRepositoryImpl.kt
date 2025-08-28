@@ -37,4 +37,15 @@ class CoffeeRepositoryImpl @Inject constructor(
         // TODO: Implement toggling favorite status
         TODO("Not yet implemented")
     }
+
+    override suspend fun getBestSellerCoffee(): Coffee {
+        val icedData = coffeeApiService.getIcedCoffees()
+        val hotData = coffeeApiService.getHotCoffees()
+        val data = icedData + hotData
+        val coffee = data.random()
+        return Coffee.fromDto(
+            coffee,
+            if (coffee in icedData) CoffeeCategory.COLD else CoffeeCategory.HOT
+        )
+    }
 }

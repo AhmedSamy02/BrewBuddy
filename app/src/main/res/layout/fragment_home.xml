@@ -16,9 +16,20 @@
         app:cardBackgroundColor="@color/secondary"
         app:cardCornerRadius="16dp">
 
+        <ProgressBar
+            android:id="@+id/best_seller_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/main"
+            android:visibility="visible" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_best_seller_data"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_best_seller"
@@ -32,6 +43,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tv_best_seller_title"
                 android:layout_width="133dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -64,6 +76,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_more_info" />
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/best_seller_iv"
                 android:layout_width="81dp"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
@@ -87,11 +100,12 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginVertical="24dp"
-        android:orientation="horizontal"/>
+        android:orientation="horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
