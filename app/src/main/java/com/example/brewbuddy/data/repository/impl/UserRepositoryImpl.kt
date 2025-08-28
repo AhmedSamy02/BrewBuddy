@@ -6,13 +6,18 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.brewbuddy.domain.repository.UserRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 
 val Context.dataStore by preferencesDataStore(name = "user_prefs")
 
-class UserRepositoryImpl(context: Context) : UserRepository {
+class UserRepositoryImpl @Inject constructor(
+    @ApplicationContext context: Context): UserRepository {
+
+
 
     private val dataStore = context.dataStore
     private val USER_NAME = stringPreferencesKey("USER_NAME")

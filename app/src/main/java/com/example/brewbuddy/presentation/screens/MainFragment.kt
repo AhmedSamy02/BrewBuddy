@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.brewbuddy.R
@@ -22,11 +23,13 @@ import com.example.brewbuddy.presentation.screens.favorites.FavoritesFragment
 import com.example.brewbuddy.presentation.screens.home.HomeFragment
 import com.example.brewbuddy.presentation.screens.order.OrderFragment
 import com.example.brewbuddy.presentation.viewmodel.EnterNameViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
-    private lateinit var viewModel: EnterNameViewModel
-
+   // private lateinit var viewModel: EnterNameViewModel
+    private val viewModel: EnterNameViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,12 +49,12 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
 
         /// val sharedPref = requireActivity().getSharedPreferences("Prefs", Context.MODE_PRIVATE)
-        val repository = UserRepositoryImpl(requireContext())
-        val saveNameUseCase = SaveUserNameUseCase(repository)
-        val getNameUseCase = GetUserNameUseCase(repository)
-        val deleteUserNameUseCase = DeleteUserNameUseCase(repository)
-        viewModel = EnterNameViewModel(saveNameUseCase, getNameUseCase, deleteUserNameUseCase)
-        viewModel.getName()
+//        val repository = UserRepositoryImpl(requireContext())
+//        val saveNameUseCase = SaveUserNameUseCase(repository)
+//        val getNameUseCase = GetUserNameUseCase(repository)
+//        val deleteUserNameUseCase = DeleteUserNameUseCase(repository)
+//        viewModel = EnterNameViewModel(saveNameUseCase, getNameUseCase, deleteUserNameUseCase)
+//        viewModel.getName()
 
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
