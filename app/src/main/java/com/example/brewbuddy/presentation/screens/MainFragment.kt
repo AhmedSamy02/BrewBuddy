@@ -71,7 +71,7 @@ class MainFragment : Fragment() {
                     true
                 }
 
-                else -> true
+                else -> false
             }
         }
         super.onViewCreated(view, savedInstanceState)
