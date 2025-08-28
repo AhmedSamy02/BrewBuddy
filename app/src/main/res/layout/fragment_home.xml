@@ -1,14 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main"
+    android:orientation="vertical"
+    android:paddingHorizontal="40dp"
     tools:context=".presentation.screens.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Home Fragment" />
+        android:layout_height="162dp"
+        android:layout_marginVertical="28dp"
+        app:cardBackgroundColor="@color/secondary"
+        app:cardCornerRadius="16dp">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_best_seller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/best_seller_of_the_week_text"
+                android:textColor="@color/main"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="@string/best_seller_placeholder_tv_text"
+                android:textColor="@color/main"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@id/tv_more_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_best_seller" />
+
+            <TextView
+                android:id="@+id/tv_more_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/more_info_text"
+                android:textColor="@color/main"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/more_info_arrow_icon"
+                android:src="@drawable/ic_arrow_forward"
+                app:layout_constraintBottom_toBottomOf="@id/tv_more_info"
+                app:layout_constraintStart_toEndOf="@id/tv_more_info" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="81dp"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                android:contentDescription="@string/best_seller_product_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/best_seller_placeholder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/weeks_recommendation_text"
+        android:textColor="@color/secondary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginVertical="24dp"
+        android:orientation="horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/what_s_in_the_shop_text"
+        android:textColor="@color/secondary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="match_parent"
+        android:layout_height="162dp"
+        android:layout_marginTop="18dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/introducing_menu"
+        app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
+
+
+</LinearLayout>

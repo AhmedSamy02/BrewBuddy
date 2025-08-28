@@ -32,7 +32,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/main"
-        android:padding="24dp"
         >
         <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
