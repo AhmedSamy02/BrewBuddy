@@ -32,6 +32,8 @@ object DatabaseModule {
     @Provides
     fun provideFavoriteDao(database: BrewBuddyDatabase): FavoritesDao = database.favDao()
 
+
+
 }
 val MIGRATION_1_2 = object : Migration(1, 2) {
     override fun migrate(database: SupportSQLiteDatabase) {
