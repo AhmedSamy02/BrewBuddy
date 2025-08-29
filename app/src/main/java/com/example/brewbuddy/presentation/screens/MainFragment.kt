@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.brewbuddy.R
 import com.example.brewbuddy.databinding.FragmentMainBinding
 import com.example.brewbuddy.presentation.screens.details_screen.DetailsFragment
-import com.example.brewbuddy.presentation.screens.drink_menu.DrinkMenuFragment
+import com.example.brewbuddy.presentation.screens.menu.DrinkMenuFragment
 import com.example.brewbuddy.presentation.screens.favorites.FavoritesFragment
 import com.example.brewbuddy.presentation.screens.home.HomeFragment
 import com.example.brewbuddy.presentation.screens.order.OrderFragment

@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MenuFragment : Fragment(R.layout.fragment_drink_menu) {
+class DrinkMenuFragment : Fragment(R.layout.fragment_drink_menu) {
 
     private val viewModel: CoffeeViewModel by viewModels()
     private lateinit var adapter: CoffeeAdapter
