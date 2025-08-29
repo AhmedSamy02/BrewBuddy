@@ -1,0 +1,3 @@
+package com.example.brewbuddy.data.local.database.dao
+
+import androidx.room.Dao import androidx.room.Insert import androidx.room.OnConflictStrategy import androidx.room.Query import com.example.brewbuddy.data.local.database.entities.CoffeeEntity import kotlinx.coroutines.flow.Flow @Dao interface CoffeeDao { @Query("SELECT * FROM coffees") fun getAllCoffees(): Flow<List<CoffeeEntity>> @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insertCoffees(coffees: List<CoffeeEntity>) @Query("SELECT * FROM coffees WHERE id = :id LIMIT 1") fun getCoffeeById(id: Int): Flow<CoffeeEntity?> }
