@@ -25,18 +25,10 @@ class WelcomeFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.welcome_screen, container, false)
     }
-        // Inflate the layout for this fragment
-//        val view = inflater.inflate(R.layout.welcome_screen, container, false)
-//        val mybutton = view.findViewById<Button>(R.id.GetStaredBtn)
 
-
-//        mybutton.setOnClickListener {
-//            val repository = UserRepositoryImpl(requireContext())
-//            val getUserNameUseCase= GetUserNameUseCase(repository)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val repository = UserRepositoryImpl(requireContext())
         val getUserNameUseCase = GetUserNameUseCase(repository)
 
