@@ -1,13 +1,18 @@
 package com.example.brewbuddy.domain.repository
 
+import com.example.brewbuddy.data.local.database.entities.CoffeeEntity
+import com.example.brewbuddy.data.remote.api.CoffeeApiModel
 import com.example.brewbuddy.domain.model.Coffee
 import com.example.brewbuddy.domain.model.CoffeeCategory
 import kotlinx.coroutines.flow.Flow
 
 interface CoffeeRepository {
-    fun getCoffeesByCategory(category: CoffeeCategory): Flow<List<Coffee>>
-    fun getFavoriteCoffees(): Flow<List<Coffee>>
-    fun searchCoffees(query: String): Flow<List<Coffee>>
+
+    suspend fun getHotCoffee(): List<CoffeeApiModel>
+    suspend fun getIcedCoffee(): List<CoffeeApiModel>
+
+    fun getAllCoffees(): Flow<List<CoffeeEntity>>
+    fun getCoffeeById(id: Int): Flow<CoffeeEntity?>
     suspend fun refreshCoffees()
-    suspend fun toggleFavorite(coffeeId: Int, isFavorite: Boolean)
 }
+

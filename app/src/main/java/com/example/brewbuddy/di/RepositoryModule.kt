@@ -1,7 +1,6 @@
 package com.example.brewbuddy.di
-
-import com.example.brewbuddy.data.repository.impl.FavoritesRepositoryImpl
 import com.example.brewbuddy.data.repository.impl.CoffeeRepositoryImpl
+import com.example.brewbuddy.data.repository.impl.FavoritesRepositoryImpl
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import com.example.brewbuddy.domain.repository.FavoritesRepository
 import dagger.Binds
@@ -17,15 +16,12 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindCoffeeRepository(
-        coffeeRepositoryImpl: CoffeeRepositoryImpl
+        impl: CoffeeRepositoryImpl
     ): CoffeeRepository
-
 
     @Binds
     @Singleton
-    abstract fun  bindFavoriteRepository(
-        favoritesRepositoryImpl: FavoritesRepositoryImpl
+    abstract fun bindFavoritesRepository(
+        impl: FavoritesRepositoryImpl
     ): FavoritesRepository
-
-    // TODO: Add other repository bindings
 }

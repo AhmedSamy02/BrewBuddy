@@ -1,40 +1,49 @@
 package com.example.brewbuddy.data.repository.impl
-
+import com.example.brewbuddy.data.local.database.dao.CoffeeDao
+import com.example.brewbuddy.data.local.database.entities.CoffeeEntity
+import com.example.brewbuddy.data.remote.api.CoffeeApiModel
 import com.example.brewbuddy.data.remote.api.CoffeeApiService
-import com.example.brewbuddy.domain.model.Coffee
-import com.example.brewbuddy.domain.model.CoffeeCategory
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class CoffeeRepositoryImpl @Inject constructor(
-    private val coffeeApiService: CoffeeApiService
+    private val apiService: CoffeeApiService,
+    private val coffeeDao: CoffeeDao
 ) : CoffeeRepository {
 
-    override fun getCoffeesByCategory(category: CoffeeCategory): Flow<List<Coffee>> {
-        // TODO: Implement getting coffees by category
-        TODO("Not yet implemented")
+    override suspend fun getHotCoffee(): List<CoffeeApiModel> {
+        return apiService.getHot()
     }
 
-    override fun getFavoriteCoffees(): Flow<List<Coffee>> {
-        // TODO: Implement getting favorite coffees
-        TODO("Not yet implemented")
+    override suspend fun getIcedCoffee(): List<CoffeeApiModel> {
+        return apiService.getIced()
     }
 
-    override fun searchCoffees(query: String): Flow<List<Coffee>> {
-        // TODO: Implement searching coffees
-        TODO("Not yet implemented")
+    override fun getAllCoffees(): Flow<List<CoffeeEntity>> {
+        return coffeeDao.getAllCoffees()
+    }
+
+    override fun getCoffeeById(id: Int): Flow<CoffeeEntity?> {
+        return coffeeDao.getCoffeeById(id)
     }
 
     override suspend fun refreshCoffees() {
-        // TODO: Implement refreshing coffees from API
-        TODO("Not yet implemented")
-    }
+        val hotCoffees = apiService.getHot()
+        val icedCoffees = apiService.getIced()
 
-    override suspend fun toggleFavorite(coffeeId: Int, isFavorite: Boolean) {
-        // TODO: Implement toggling favorite status
-        TODO("Not yet implemented")
+        val entities = (hotCoffees + icedCoffees).map {
+            CoffeeEntity(
+                id = it.id ?: 0,
+                title = it.title ?: "Unknown",
+                description = it.description ?: "No description available",
+                imageUrl = it.image ?: "",
+                ingredients = it.ingredients?.joinToString(", ") ?: "",
+                price = (5..10).random().toDouble(), // mock price
+                category = if (hotCoffees.contains(it)) "HOT" else "ICED"
+            )
+        }
+
+        coffeeDao.insertCoffees(entities)
     }
 }
