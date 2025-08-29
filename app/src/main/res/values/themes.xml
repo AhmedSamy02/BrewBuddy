@@ -7,8 +7,10 @@
 
     <style name="Theme.BrewBuddy" parent="Base.Theme.BrewBuddy" >
         <item name="android:fontFamily">@font/inter_font</item>
-        <item name="android:statusBarColor">@color/main</item>
-        <item name="android:windowLightStatusBar" >true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 <!--        <item name="android:itemBackground">@color/main</item>-->
 
     </style>
