@@ -28,4 +28,5 @@
     <string name="double_espresso_with_condensed_milk_served_cold">Double espresso with condensed milk, served cold</string>
     <string name="drink_image">Drink Image</string>
     <string name="close">Close</string>
+    <string name="details"><u>Details</u></string>
 </resources>
