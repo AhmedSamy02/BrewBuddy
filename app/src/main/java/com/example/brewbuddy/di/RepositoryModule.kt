@@ -1,5 +1,5 @@
 package com.example.brewbuddy.di
-import com.example.brewbuddy.data.repository.impl.CoffeeRepositoryImpl
+import com.example.brewbuddy.data.repository.CoffeeRepositoryImpl
 import com.example.brewbuddy.data.repository.impl.FavoritesRepositoryImpl
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import com.example.brewbuddy.domain.repository.FavoritesRepository

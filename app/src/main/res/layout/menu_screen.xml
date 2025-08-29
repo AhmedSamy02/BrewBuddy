@@ -1,97 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8E3B6">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <TextView
-        android:id="@+id/topText"
-        android:layout_width="wrap_content"
+    <!-- Search bar -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="What would you like to drink today"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="#834D1E"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:queryHint="Search coffee..." />
 
-    <EditText
-        android:id="@+id/searchBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Search coffee..."
-        android:padding="12dp"
-        android:background="@drawable/search_rounded_outline"
-        app:layout_constraintTop_toBottomOf="@id/topText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"/>
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <!-- Buttons: Cold and Hot -->
-    <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/searchBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:weightSum="2">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonCold"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Cold"
-            android:textColor="#834D1E"
-            android:background="@drawable/button_cold_hot_selector"
-            android:layout_marginEnd="8dp"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonHot"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Hot"
-            android:textColor="#834D1E"
-            android:background="@drawable/button_cold_hot_selector"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
-
-    <!-- Coffee List Container -->
-    <LinearLayout
-        android:id="@+id/coffeeListContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:padding="12dp"
-        android:background="@drawable/coffee_list_container"
-        app:layout_constraintTop_toBottomOf="@id/buttonLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp">
-
-        <!-- Coffee RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/coffeeRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:padding="8dp"
-            tools:listitem="@layout/item_coffee"/>
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-
+</LinearLayout>

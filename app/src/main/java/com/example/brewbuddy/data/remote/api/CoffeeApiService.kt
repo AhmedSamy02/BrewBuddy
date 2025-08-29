@@ -4,10 +4,9 @@ import com.example.brewbuddy.data.remote.api.CoffeeApiModel
 import retrofit2.http.GET
 
 interface CoffeeApiService {
-
     @GET("coffee/hot")
-    suspend fun getHot(): List<CoffeeApiModel>
+    suspend fun getHotCoffees(): List<CoffeeApiModel>
 
     @GET("coffee/iced")
-    suspend fun getIced(): List<CoffeeApiModel>
+    suspend fun getIcedCoffees(): List<CoffeeApiModel>
 }

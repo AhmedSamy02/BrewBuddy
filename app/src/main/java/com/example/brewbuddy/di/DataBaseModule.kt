@@ -12,38 +12,27 @@ import dagger.hilt.components.SingletonComponent
 import com.example.brewbuddy.data.local.database.BrewBuddyDatabase
 import com.example.brewbuddy.data.local.database.dao.CoffeeDao
 import com.example.brewbuddy.data.local.database.dao.FavoritesDao
+import com.example.brewbuddy.data.remote.api.CoffeeApiService
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
 @Module
 @InstallIn(SingletonComponent::class)
-object DatabaseModule {
+object DataModule {
+
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): BrewBuddyDatabase {
-        return Room.databaseBuilder(
+    fun provideDatabase(@ApplicationContext context: Context): BrewBuddyDatabase =
+        Room.databaseBuilder(
             context,
             BrewBuddyDatabase::class.java,
-            "brewbuddy_database"
-        )
-            .addMigrations(MIGRATION_1_2) // 👈 keep data safe
-            .build()
-    }
+            "brewbuddy_db"
+        ).build()
 
     @Provides
-    fun provideCoffeeDao(database: BrewBuddyDatabase): CoffeeDao {
-        return database.coffeeDao()
-    }
+    fun provideCoffeeDao(db: BrewBuddyDatabase): CoffeeDao = db.coffeeDao()
 
     @Provides
-    fun provideFavoriteDao(database: BrewBuddyDatabase): FavoritesDao = database.favDao()
-
-
-
-}
-val MIGRATION_1_2 = object : Migration(1, 2) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        // Adds a new column without wiping data
-        database.execSQL("ALTER TABLE orders ADD COLUMN ")
-    }
+    fun provideFavoritesDao(db: BrewBuddyDatabase): FavoritesDao = db.favDao()
 }
