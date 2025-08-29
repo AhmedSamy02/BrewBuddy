@@ -9,10 +9,14 @@
     android:label="welcome">
     <action
         android:id="@+id/toEnterNameFragment"
-        app:destination="@id/enterNameFragment"/>
+        app:destination="@id/enterNameFragment"
+        app:popUpTo="@id/welcomeFragment"
+        app:popUpToInclusive="true"/>
     <action
         android:id="@+id/toMainFragment"
-        app:destination="@id/MainFragment"/>
+        app:destination="@id/MainFragment"
+        app:popUpTo="@id/welcomeFragment"
+        app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -21,7 +25,9 @@
         android:label="Enter Name">
         <action
             android:id="@+id/toMainFragment"
-            app:destination="@id/MainFragment"/>
+            app:destination="@id/MainFragment"
+            app:popUpTo="@id/enterNameFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/MainFragment"

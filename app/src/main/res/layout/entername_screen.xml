@@ -8,9 +8,10 @@
 
     <!-- TODO: Update blank fragment layout -->
     <FrameLayout
+        android:id="@+id/myimage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="8dp">
+        android:layout_height="250dp"
+        android:layout_marginBottom="16dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -24,9 +25,36 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:background="@drawable/top_image_shape"
             android:clipToOutline="true"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Co/Choc"
+                android:textSize="36sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_font" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A way to enjoy bitter and sweet of life"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_font"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
     </FrameLayout>
    <LinearLayout
        android:id="@+id/enterNameBox"
@@ -34,16 +62,17 @@
        android:layout_height="wrap_content"
        android:orientation="vertical"
        android:background="@drawable/rounded_box"
-
-       android:paddingTop="80dp"
-       android:paddingBottom="60dp"
-       android:paddingRight="20dp"
-       android:paddingLeft="20dp"
-
-
+       android:paddingTop="30dp"
+       android:paddingBottom="30dp"
+       android:paddingRight="30dp"
+       android:paddingLeft="30dp"
        android:elevation="6dp"
-       android:layout_centerInParent="true">
-
+       android:layout_below="@id/myimage"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="20dp">
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="40dp"/>
        <TextView
             android:id="@+id/enterNameText"
             android:layout_width="wrap_content"
@@ -54,46 +83,50 @@
             android:textStyle="bold"
             android:textColor="@color/secondary"
             android:layout_gravity="center_horizontal"
-            android:paddingBottom="12dp"/>
+            android:layout_marginBottom="40dp"/>
         <EditText
         android:id="@+id/enterNameEditText"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Enter name"
-        android:padding="10dp"
-        android:background="@android:drawable/edit_text"
-        android:layout_marginBottom="16dp"/>
+        android:hint="John Smith"
+        android:backgroundTint="@color/secondary"
+        android:layout_marginBottom="40dp"/>
     <Button
         android:id="@+id/saveNameButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Save"
-        android:textAllCaps="false"
         android:backgroundTint="#6F4E37"
-        android:textColor="@android:color/white"
-        android:padding="10dp"/>
+        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"/>
+
+       <View
+           android:layout_width="match_parent"
+           android:layout_height="30dp"/>
     </LinearLayout>
 
-    <ImageView
-    android:id="@+id/coffeImage"
-    android:layout_width="202dp"
-    android:layout_height="270px"
-    android:src="@drawable/coffe"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentStart="true"
-    android:layout_margin="16dp"
-    android:scaleType="centerCrop"
-    />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
-    <ImageView
-        android:id="@+id/chocolateImage"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:src="@drawable/chocolate"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:scaleType="centerCrop"
+        <ImageView
+            android:id="@+id/coffeImage"
+            android:layout_width="0dp"
+            android:layout_height="270dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/coffe" />
 
-       />
+        <ImageView
+            android:id="@+id/chocolateImage"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:src="@drawable/chocolate"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"/>
+    </LinearLayout>
 </RelativeLayout>

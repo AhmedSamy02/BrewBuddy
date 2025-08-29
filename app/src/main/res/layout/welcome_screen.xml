@@ -18,26 +18,42 @@
         android:layout_height="match_parent"
         android:background="#AA4E342E" />
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Welcome"
-    android:textSize="80dp"
-    android:textColor="#FFF8E7"
-    android:textStyle="bold"
-    android:fontFamily="@font/pristina"
-    android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/GetStaredBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Started"
-        android:textColor="#4E342E"
-        android:textStyle="bold"
-        android:backgroundTint="#FFF8E7"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Co/Choc"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter_font"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A way to enjoy bitter and sweet of life"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter_font"/>
+
+    </LinearLayout>
+
+<!--    <Button-->
+<!--        android:id="@+id/GetStaredBtn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Get Started"-->
+<!--        android:textColor="#4E342E"-->
+<!--        android:textStyle="bold"-->
+<!--        android:backgroundTint="#FFF8E7"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_margin="24dp"/>-->
 
 
 

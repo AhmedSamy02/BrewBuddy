@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.brewbuddy.R
 import com.example.brewbuddy.data.repository.impl.UserRepositoryImpl
 import com.example.brewbuddy.domain.usecase.GetUserNameUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -22,16 +23,25 @@ class WelcomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.welcome_screen, container, false)
+    }
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.welcome_screen, container, false)
-        val mybutton = view.findViewById<Button>(R.id.GetStaredBtn)
+//        val view = inflater.inflate(R.layout.welcome_screen, container, false)
+//        val mybutton = view.findViewById<Button>(R.id.GetStaredBtn)
 
 
-        mybutton.setOnClickListener {
-            val repository = UserRepositoryImpl(requireContext())
-            val getUserNameUseCase= GetUserNameUseCase(repository)
+//        mybutton.setOnClickListener {
+//            val repository = UserRepositoryImpl(requireContext())
+//            val getUserNameUseCase= GetUserNameUseCase(repository)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val repository = UserRepositoryImpl(requireContext())
+        val getUserNameUseCase = GetUserNameUseCase(repository)
 
             lifecycleScope.launch {
+                delay(1000)
             //// val sharedPref = requireActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE)
             val savedName = getUserNameUseCase().first()
             if (savedName != null) {
@@ -41,6 +51,5 @@ class WelcomeFragment : Fragment() {
             }
         }
     }
-        return view
+
     }
-}
