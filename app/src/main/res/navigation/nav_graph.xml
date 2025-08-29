@@ -13,6 +13,10 @@
         <argument
             android:name="coffee"
             app:argType="com.example.brewbuddy.domain.model.Coffee"/>
+
+        <action
+            android:id="@+id/action_detailsFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -22,5 +26,28 @@
         <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.brewbuddy.presentation.screens.payment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <argument
+            android:name="coffeeId"
+            app:argType="integer" />
+        <argument
+            android:name="coffeeName"
+            app:argType="string" />
+        <argument
+            android:name="coffeePrice"
+            app:argType="float" />
+        <argument
+            android:name="quantity"
+            app:argType="integer" />
+        <argument
+            android:name="totalAmount"
+            app:argType="float" />
     </fragment>
 </navigation>

@@ -128,27 +128,32 @@ class DetailsFragment : Fragment() {
             viewModel.onNavigatedToPayment()
         }
     }
-    
+
     private fun navigateToPayment(coffee: Coffee?, quantity: Int) {
-        // TODO: Navigate to payment screen with coffee and quantity data
         coffee?.let {
-            Toast.makeText(
-                context, 
-                "Navigate to Payment: ${it.title} x$quantity = Rp ${String.format("%.0f", it.price * quantity)}", 
-                Toast.LENGTH_LONG
-            ).show()
-            
-            // Example of how you would navigate using Navigation Component:
-            // val action = DetailsFragmentDirections.actionDetailsToPayment(
-            //     coffeeId = it.id,
-            //     coffeeName = it.title,
-            //     coffeePrice = it.price,
-            //     quantity = quantity,
-            //     totalAmount = it.price * quantity
-            // )
-            // findNavController().navigate(action)
+            try {
+                val action = DetailsFragmentDirections.actionDetailsFragmentToPaymentFragment(
+                    coffeeId = it.id,
+                    coffeeName = it.title,
+                    coffeePrice = it.price.toFloat(),
+                    quantity = quantity,
+                    totalAmount = (it.price * quantity).toFloat()
+                )
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                // Fallback navigation using bundle if directions fail
+                val bundle = Bundle().apply {
+                    putInt("coffeeId", it.id)
+                    putString("coffeeName", it.title)
+                    putFloat("coffeePrice", it.price.toFloat())
+                    putInt("quantity", quantity)
+                    putFloat("totalAmount", (it.price * quantity).toFloat())
+                }
+                findNavController().navigate(R.id.action_detailsFragment_to_paymentFragment, bundle)
+            }
         }
     }
+
 
 
 

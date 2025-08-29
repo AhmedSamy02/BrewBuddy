@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription=""
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/sample"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
