@@ -10,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import com.example.brewbuddy.data.local.database.BrewBuddyDatabase
+import com.example.brewbuddy.data.local.database.dao.CoffeeDao
 import com.example.brewbuddy.data.local.database.dao.FavoritesDao
 import javax.inject.Singleton
 
@@ -27,6 +28,11 @@ object DatabaseModule {
         )
             .addMigrations(MIGRATION_1_2) // 👈 keep data safe
             .build()
+    }
+
+    @Provides
+    fun provideCoffeeDao(database: BrewBuddyDatabase): CoffeeDao {
+        return database.coffeeDao()
     }
 
     @Provides
