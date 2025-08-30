@@ -7,12 +7,12 @@
     android:orientation="vertical"
     tools:context=".presentation.screens.order.OrderFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/segmentGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:singleSelection="true"
+        android:layout_margin="8dp"
         app:selectionRequired="true"
         app:checkedButton="@id/btn_recent">
 
@@ -34,6 +34,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recView"
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/order_history_item"

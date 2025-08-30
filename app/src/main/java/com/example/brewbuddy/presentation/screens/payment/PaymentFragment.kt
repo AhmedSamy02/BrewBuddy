@@ -1,6 +1,7 @@
 package com.example.brewbuddy.presentation.screens.payment
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.brewbuddy.R
 import com.example.brewbuddy.databinding.FragmentPaymentBinding
 import com.example.brewbuddy.presentation.viewmodel.PaymentViewModel
+import com.example.brewbuddy.presentation.viewmodels.OrderHistoryViewModel
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,6 +45,7 @@ class PaymentFragment : Fragment() {
         val coffeePrice = try { args.coffeePrice } catch (e: Exception) { arguments?.getFloat("coffeePrice") ?: 0f }
         val quantity = try { args.quantity } catch (e: Exception) { arguments?.getInt("quantity") ?: 1 }
         val totalAmount = try { args.totalAmount } catch (e: Exception) { arguments?.getFloat("totalAmount") ?: 0f }
+        val imageUrl = try { args.coffeeImage } catch (e: Exception) { arguments?.getString("coffeeImage") ?: "" }
 
         android.util.Log.d("PaymentFragment", "Received data - ID: $coffeeId, Name: $coffeeName, Price: $coffeePrice, Quantity: $quantity, Total: $totalAmount")
 
@@ -51,10 +54,10 @@ class PaymentFragment : Fragment() {
             coffeeName = coffeeName,
             coffeePrice = coffeePrice.toDouble(),
             quantity = quantity,
-            totalAmount = totalAmount.toDouble()
+            totalAmount = totalAmount.toDouble(),
+            imageUrl = imageUrl
         )
 
-        // Load saved address
         viewModel.loadAddress()
     }
 
@@ -65,11 +68,27 @@ class PaymentFragment : Fragment() {
 
         binding.btnPlaceOrder.setOnClickListener {
             viewModel.placeOrder()
+            showSuccessDialog()
         }
 
         binding.btnEdit.setOnClickListener {
             showAddressDialog()
         }
+    }
+
+    private fun showSuccessDialog() {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_order_success, null)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        dialogView.findViewById<View>(R.id.btnDone).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun observeViewModel() {
