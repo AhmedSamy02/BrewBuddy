@@ -70,11 +70,9 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     ksp(libs.androidx.room.compiler.v261)
 
-<<<<<<< HEAD
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     
-=======
->>>>>>> origin/Dev
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
 

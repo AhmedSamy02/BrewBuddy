@@ -1,23 +1,22 @@
 package com.example.brewbuddy.presentation.screens.Welcome
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.brewbuddy.R
-import com.example.brewbuddy.data.repository.impl.UserRepositoryImpl
-import com.example.brewbuddy.domain.usecase.GetUserNameUseCase
+import com.example.brewbuddy.presentation.viewmodel.EnterNameViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WelcomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+    private val viewModel: EnterNameViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,19 +28,20 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val repository = UserRepositoryImpl(requireContext())
-        val getUserNameUseCase = GetUserNameUseCase(repository)
-
-            lifecycleScope.launch {
-                delay(1000)
-            //// val sharedPref = requireActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE)
-            val savedName = getUserNameUseCase().first()
-            if (savedName != null) {
+        
+        lifecycleScope.launch {
+            // Show welcome screen for a few milliseconds
+            delay(2000) // 2 seconds - you can adjust this
+            
+            // Check if user has already saved their name
+            val savedName = viewModel.userName.value
+            if (!savedName.isNullOrBlank()) {
+                // Navigate to main screen if name exists
                 findNavController().navigate(R.id.toMainFragment)
             } else {
+                // Navigate to enter name screen if no name saved
                 findNavController().navigate(R.id.toEnterNameFragment)
             }
         }
     }
-
-    }
+}

@@ -2,11 +2,8 @@ package com.example.brewbuddy.di
 
 import com.example.brewbuddy.data.repository.impl.FavoritesRepositoryImpl
 import com.example.brewbuddy.data.repository.impl.CoffeeRepositoryImpl
-<<<<<<< HEAD
 import com.example.brewbuddy.data.repository.impl.UserRepositoryImpl
-=======
 import com.example.brewbuddy.data.repository.impl.OrderHistoryRepositoryImp
->>>>>>> origin/Dev
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import com.example.brewbuddy.domain.repository.UserRepository
 import com.example.brewbuddy.domain.usecase.DeleteUserNameUseCase
