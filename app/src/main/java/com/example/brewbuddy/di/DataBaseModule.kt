@@ -12,25 +12,28 @@ import dagger.hilt.components.SingletonComponent
 import com.example.brewbuddy.data.local.database.BrewBuddyDatabase
 import com.example.brewbuddy.data.local.database.dao.CoffeeDao
 import com.example.brewbuddy.data.local.database.dao.FavoritesDao
-import com.example.brewbuddy.data.remote.api.CoffeeApiService
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
 @Module
 @InstallIn(SingletonComponent::class)
-object DataModule {
-
+object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): BrewBuddyDatabase =
-        Room.databaseBuilder(
+    fun provideDatabase(@ApplicationContext context: Context): BrewBuddyDatabase {
+        return Room.databaseBuilder(
             context,
             BrewBuddyDatabase::class.java,
-            "brewbuddy_db"
-        ).build()
+            "brewbuddy_database"
+        )
+            .fallbackToDestructiveMigration(false)
+            .build()
+    }
 
     @Provides
+    fun provideFavoriteDao(database: BrewBuddyDatabase): FavoritesDao = database.favDao()
+    @Provides
+    fun provideOrderHistoryDao(database: BrewBuddyDatabase): OrderHistoryDao = database.orderHistoryDao()
     fun provideCoffeeDao(db: BrewBuddyDatabase): CoffeeDao = db.coffeeDao()
 
     @Provides

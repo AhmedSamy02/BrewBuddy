@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.hilt)
     id ("kotlin-kapt")
 
+    id ("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
@@ -46,7 +49,7 @@ android {
 dependencies {
 
     //Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0") 
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     kapt ("com.github.bumptech.glide:compiler:4.16.0")
     // Core Android
     implementation(libs.androidx.core.ktx)
@@ -66,7 +69,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     ksp(libs.androidx.room.compiler.v261)
-    
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     

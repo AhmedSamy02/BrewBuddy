@@ -1,16 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme -->
+    <!-- Base application theme. -->
     <style name="Base.Theme.BrewBuddy" parent="Theme.Material3.DayNight.NoActionBar">
+
+
     </style>
 
-    <!-- App theme -->
-    <style name="Theme.BrewBuddy" parent="Base.Theme.BrewBuddy">
+    <style name="Theme.BrewBuddy" parent="Base.Theme.BrewBuddy" >
         <item name="android:fontFamily">@font/inter_font</item>
-        <item name="android:statusBarColor">@color/secondary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="colorPrimary">@color/secondary</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/secondary</item>
+        <item name="android:windowLightNavigationBar">true</item>
+<!--        <item name="android:itemBackground">@color/main</item>-->
+
     </style>
 
     <!-- Custom button style (optional) -->
@@ -21,8 +23,12 @@
 
     <!-- Popup menu style -->
     <style name="CustomPopupMenu" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="android:backgroundTint">@color/secondary</item>
+        <item name="android:backgroundTint">@color/main</item>
         <item name="android:textColor">@color/secondary</item>
         <item name="android:divider">@drawable/menu_divider</item>
+    </style>
+    <style name="roundedCornersImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 </resources>
