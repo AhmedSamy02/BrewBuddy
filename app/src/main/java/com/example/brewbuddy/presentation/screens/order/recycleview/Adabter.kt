@@ -9,14 +9,27 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.brewbuddy.R
 import com.example.brewbuddy.data.local.database.entities.OrderHistory
+import com.google.android.material.card.MaterialCardView
 
 class Adapter(private var list: List<OrderHistory>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+
+    private var expandedPosition = -1
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var imageView: ImageView = view.findViewById(R.id.imgProduct)
         var orderQuantity: TextView = view.findViewById(R.id.orderQuantity_tv)
         var orderName: TextView = view.findViewById(R.id.orderName_tv)
         var date: TextView = view.findViewById(R.id.date_tv)
+        var detailsText: TextView = view.findViewById(R.id.details_tv)
+        var expandedLayout: View = view.findViewById(R.id.expandedLayout)
+        var cardView: MaterialCardView = view.findViewById(R.id.cardView)
+
+        // Invoice details TextViews
+        var totalPrice: TextView = view.findViewById(R.id.totalPrice_tv)
+        var promo: TextView = view.findViewById(R.id.promo_tv)
+        var deliveryFee: TextView = view.findViewById(R.id.deliveryFee_tv)
+        var packagingFee: TextView = view.findViewById(R.id.packagingFee_tv)
+        var address: TextView = view.findViewById(R.id.address_tv)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,21 +42,49 @@ class Adapter(private var list: List<OrderHistory>) : RecyclerView.Adapter<Adapt
         val item = list[position]
         val context = holder.itemView.context
 
-        holder.orderQuantity.text = "${item.quantity}  "
+        holder.orderQuantity.text = "${item.quantity}x "
         holder.orderName.text = item.title
         holder.date.text = item.date
+
+        holder.totalPrice.text = "${item.totalPrice} RP"
+        holder.promo.text = "-${item.promo} RP"
+        holder.deliveryFee.text = "${item.deliveryFee} RP"
+        holder.packagingFee.text = "${item.packagingFee} RP"
+        holder.address.text = item.address
 
         Glide.with(context)
             .load(item.image)
             .placeholder(R.drawable.sample)
             .error(R.drawable.sample)
             .into(holder.imageView)
+
+        // Handle expand/collapse
+        val isExpanded = position == expandedPosition
+        holder.expandedLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
+        holder.detailsText.text = if (isExpanded) context.getString(R.string.hide_details)
+        else context.getString(R.string.details)
+
+        holder.detailsText.setOnClickListener {
+            val previousExpanded = expandedPosition
+            expandedPosition = if (isExpanded) -1 else position
+            notifyItemChanged(previousExpanded)
+            notifyItemChanged(position)
+        }
+
+        // Optional: Add click listener to the entire card
+        holder.cardView.setOnClickListener {
+            val previousExpanded = expandedPosition
+            expandedPosition = if (isExpanded) -1 else position
+            notifyItemChanged(previousExpanded)
+            notifyItemChanged(position)
+        }
     }
 
     override fun getItemCount() = list.size
 
     fun updateList(newList: List<OrderHistory>) {
         list = newList
+        expandedPosition = -1
         notifyDataSetChanged()
     }
 }

@@ -12,5 +12,10 @@ data class OrderHistory(
     val image: String?,
     val date: String,
     val quantity: Int,
-    val invoiceId:Int
+    val totalPrice: Double = 0.0,
+    val promo: Double = 0.0,
+    val deliveryFee: Double=0.0,
+    val packagingFee: Double=0.0,
+    val address:String = "",
 )
+

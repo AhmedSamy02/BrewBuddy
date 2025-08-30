@@ -114,7 +114,11 @@ class PaymentViewModel @Inject constructor(
             image = _uiState.value.imageUrl,
             date = currentDate,
             quantity = _uiState.value.quantity,
-            invoiceId = 1
+            totalPrice = _uiState.value.totalAmount,
+            promo = _uiState.value.promoDiscount,
+            deliveryFee = _uiState.value.deliveryFee,
+            packagingFee = _uiState.value.packagingFee,
+            address = _uiState.value.deliveryAddress
         )
     }
 }

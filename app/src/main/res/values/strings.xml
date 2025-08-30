@@ -39,4 +39,5 @@
     <string name="what_s_new_in_the_shop_content_description">What\'s new</string>
     <string name="introduction_our_new_menu">Introduction our new menu</string>
     <string name="details"><u>Details</u></string>
+    <string name="hide_details">see less</string>
 </resources>

@@ -9,7 +9,7 @@ import com.example.brewbuddy.data.local.database.entities.OrderHistory
 
 @Database(
     entities = [FavEntity::class, OrderHistory::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class BrewBuddyDatabase : RoomDatabase() {

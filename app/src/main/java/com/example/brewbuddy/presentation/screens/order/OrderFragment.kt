@@ -42,14 +42,11 @@ class OrderFragment : Fragment() {
         setupRecyclerView()
         setupObservers()
         setupSegmentButton()
-       // insertMockData()
     }
 
     private fun setupSegmentButton() {
-        // Set initial state to Recent
         binding.segmentGroup.check(R.id.btn_recent)
 
-        // Handle segment changes
         binding.segmentGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (isChecked) {
                 when (checkedId) {
@@ -74,59 +71,6 @@ class OrderFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@OrderFragment.adapter
         }
-    }
-
-    private fun insertMockData() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            // Check if we need to insert mock data
-            val currentOrders = viewModel.orders.value
-            if (currentOrders.isEmpty()) {
-                val mockOrders = createMockOrders()
-                mockOrders.forEach { order ->
-                    viewModel.addOrder(order)
-                }
-            }
-        }
-    }
-
-    private fun createMockOrders(): List<OrderHistory> {
-        val dateFormat = SimpleDateFormat("MM/dd", Locale.getDefault())
-        val currentTime = Date()
-
-        return listOf(
-            OrderHistory(
-                coffeeId = 1,
-                title = "Espresso",
-                image = "https://example.com/espresso.jpg",
-                date = dateFormat.format(currentTime),
-                quantity = 2,
-                invoiceId = UUID.randomUUID().hashCode()
-            ),
-            OrderHistory(
-                coffeeId = 2,
-                title = "Cappuccino",
-                image = "https://example.com/cappuccino.jpg",
-                date = dateFormat.format(Date(currentTime.time - 86400000)),
-                quantity = 1,
-                invoiceId = UUID.randomUUID().hashCode()
-            ),
-            OrderHistory(
-                coffeeId = 3,
-                title = "Latte",
-                image = "https://example.com/latte.jpg",
-                date = dateFormat.format(Date(currentTime.time - 172800000)),
-                quantity = 3,
-                invoiceId = UUID.randomUUID().hashCode()
-            ),
-            OrderHistory(
-                coffeeId = 4,
-                title = "Mocha",
-                image = "https://example.com/mocha.jpg",
-                date = dateFormat.format(Date(currentTime.time - 259200000)),
-                quantity = 1,
-                invoiceId = UUID.randomUUID().hashCode()
-            ),
-        )
     }
 
     override fun onDestroyView() {
