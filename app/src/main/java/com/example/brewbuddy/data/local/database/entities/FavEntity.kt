@@ -10,5 +10,4 @@ data class FavEntity(
     val image: String?,
     val priceCents: Double,
     val isHot: Boolean
-
 )

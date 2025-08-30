@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    id ("kotlin-kapt")
+
 }
 
 android {
@@ -36,10 +38,16 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
+
     }
 }
 
 dependencies {
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0") 
+    kapt ("com.github.bumptech.glide:compiler:4.16.0")
     // Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -78,6 +86,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("io.coil-kt:coil-compose:2.6.0")
 
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 
 
 }
