@@ -1,12 +1,12 @@
-package com.example.brewbuddy.data.repository
+package com.example.brewbuddy.data.repository.impl
 
 import com.example.brewbuddy.data.local.database.dao.CoffeeDao
 import com.example.brewbuddy.data.local.database.entities.CoffeeEntity
 import com.example.brewbuddy.data.remote.api.CoffeeApiModel
 import com.example.brewbuddy.data.remote.api.CoffeeApiService
+import com.example.brewbuddy.domain.model.SampleCoffees
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,17 +20,36 @@ class CoffeeRepositoryImpl @Inject constructor(
         dao.getCoffeesByCategory(category)
 
     override suspend fun fetchHotCoffees(): List<CoffeeEntity> {
-        val data = api.getHotCoffees()
-        val entities = data.map { it.toEntity("HOT") }
-        dao.insertCoffees(entities)
-        return entities
+        return try {
+            val data = api.getHotCoffees()
+            val entities = data.map { it.toEntity("HOT") }
+            dao.insertCoffees(entities)
+            entities
+        } catch (e: Exception) {
+            // fallback: seed if database empty
+            if (dao.getCoffeeCount() == 0) {
+                dao.insertCoffees(SampleCoffees.defaultCoffees)
+                SampleCoffees.defaultCoffees
+            } else {
+                emptyList()
+            }
+        }
     }
 
     override suspend fun fetchColdCoffees(): List<CoffeeEntity> {
-        val data = api.getIcedCoffees()
-        val entities = data.map { it.toEntity("COLD") }
-        dao.insertCoffees(entities)
-        return entities
+        return try {
+            val data = api.getIcedCoffees()
+            val entities = data.map { it.toEntity("COLD") }
+            dao.insertCoffees(entities)
+            entities
+        } catch (e: Exception) {
+            if (dao.getCoffeeCount() == 0) {
+                dao.insertCoffees(SampleCoffees.defaultCoffees)
+                SampleCoffees.defaultCoffees
+            } else {
+                emptyList()
+            }
+        }
     }
 
     override fun getCachedCoffees(): Flow<List<CoffeeEntity>> = dao.getAllCoffees()

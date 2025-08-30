@@ -5,49 +5,58 @@ import androidx.lifecycle.viewModelScope
 import com.example.brewbuddy.data.local.database.entities.CoffeeEntity
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CoffeeViewModel @Inject constructor(
-    private val repo: CoffeeRepository
+    private val repository: CoffeeRepository
 ) : ViewModel() {
 
     private val _coffeeList = MutableStateFlow<List<CoffeeEntity>>(emptyList())
-    val coffeeList: StateFlow<List<CoffeeEntity>> = _coffeeList
+    val coffeeList: StateFlow<List<CoffeeEntity>> = _coffeeList.asStateFlow()
 
-    private var allItems: List<CoffeeEntity> = emptyList()
+    private var currentCategory: String? = null
+    private var currentSearch: String = ""
 
-    init { loadCoffees() }
-
-    private fun loadCoffees() {
+    init {
+        // Try fetching coffees at startup
         viewModelScope.launch {
-            try {
-                val hot = repo.fetchHotCoffees()
-                val cold = repo.fetchColdCoffees()
-                allItems = (hot + cold).sortedBy { it.title }
-                _coffeeList.value = allItems
-            } catch (e: Exception) {
-                e.printStackTrace()
+            repository.fetchHotCoffees()
+            repository.fetchColdCoffees()
+        }
+
+        // Always observe cached coffees
+        viewModelScope.launch {
+            repository.getCachedCoffees().collect { list ->
+                _coffeeList.value = applyFilters(list)
             }
         }
     }
 
     fun filter(query: String) {
-        _coffeeList.value = if (query.isBlank()) {
-            allItems
-        } else {
-            val q = query.trim().lowercase()
-            allItems.filter {
-                it.title.lowercase().contains(q) ||
-                        it.ingredients.lowercase().contains(q)
+        currentSearch = query
+        updateFilteredList()
+    }
+
+    fun filterByCategory(category: String) {
+        currentCategory = category
+        updateFilteredList()
+    }
+
+    private fun updateFilteredList() {
+        viewModelScope.launch {
+            repository.getCachedCoffees().collect { list ->
+                _coffeeList.value = applyFilters(list)
             }
         }
     }
 
-    fun filterByCategory(category: String) {
-        _coffeeList.value = allItems.filter { it.category == category }
+    private fun applyFilters(list: List<CoffeeEntity>): List<CoffeeEntity> {
+        return list.filter { coffee ->
+            (currentCategory == null || coffee.category == currentCategory) &&
+                    (currentSearch.isBlank() || coffee.title.contains(currentSearch, ignoreCase = true))
+        }
     }
 }

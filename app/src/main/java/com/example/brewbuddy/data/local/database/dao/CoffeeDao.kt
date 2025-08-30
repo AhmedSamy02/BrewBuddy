@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CoffeeDao {
+
+    @Query("SELECT COUNT(*) FROM coffees")
+    suspend fun getCoffeeCount(): Int
     @Query("SELECT * FROM coffees")
     fun getAllCoffees(): Flow<List<CoffeeEntity>>
     @Query("SELECT * FROM coffees WHERE category = :category")

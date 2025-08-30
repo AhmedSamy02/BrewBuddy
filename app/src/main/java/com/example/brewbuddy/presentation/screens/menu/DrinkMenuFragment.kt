@@ -38,6 +38,7 @@ class DrinkMenuFragment : Fragment(R.layout.fragment_drink_menu) {
 
         val btnHot = view.findViewById<Button>(R.id.buttonHot)
         val btnCold = view.findViewById<Button>(R.id.buttonCold)
+
         btnHot.setOnClickListener { viewModel.filterByCategory("HOT") }
         btnCold.setOnClickListener { viewModel.filterByCategory("COLD") }
 
