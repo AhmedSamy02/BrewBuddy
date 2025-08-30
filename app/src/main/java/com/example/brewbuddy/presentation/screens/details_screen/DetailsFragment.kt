@@ -40,11 +40,9 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Handle window insets for the top buttons (close and favorite)
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             
-            // Add top padding to the close button to account for status bar
             binding.closeBtn.setPadding(
                 binding.closeBtn.paddingLeft,
                 binding.closeBtn.paddingTop + systemBars.top,
@@ -52,7 +50,6 @@ class DetailsFragment : Fragment() {
                 binding.closeBtn.paddingBottom
             )
             
-            // Add top padding to the favorite button to account for status bar
             binding.favouriteBtn.setPadding(
                 binding.favouriteBtn.paddingLeft,
                 binding.favouriteBtn.paddingTop + systemBars.top,
@@ -66,7 +63,6 @@ class DetailsFragment : Fragment() {
         setupUI()
         observeViewModel()
 
-        // Get coffee from navigation arguments and set it in the view model
         val coffee = args.coffee
         viewModel.setCoffee(coffee)
     }
@@ -102,16 +98,13 @@ class DetailsFragment : Fragment() {
     }
 
         private fun updateUI(state: com.example.brewbuddy.presentation.viewmodel.DetailsUiState) {
-        // Update quantity
         binding.tvQuantity.text = state.quantity.toString()
         
-        // Update coffee details
         state.coffee?.let { coffee ->
             binding.productTitle.text = coffee.title
             binding.productDescription.text = coffee.description
             binding.productPrice.text = "Rp ${String.format("%.0f", coffee.price)}"
             
-            // Load coffee image using Glide
             Glide.with(this)
                 .load(coffee.image)
                 .placeholder(R.drawable.coffee_image_placeholder)
@@ -119,10 +112,8 @@ class DetailsFragment : Fragment() {
                 .into(binding.productImage)
         }
         
-        // Update favorite button state
         binding.favouriteBtn.isSelected = state.isFavorite
         
-        // Handle navigation to payment
         if (state.shouldNavigateToPayment) {
             navigateToPayment(state.selectedCoffee, state.finalQuantity)
             viewModel.onNavigatedToPayment()

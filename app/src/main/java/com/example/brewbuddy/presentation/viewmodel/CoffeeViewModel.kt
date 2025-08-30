@@ -21,13 +21,11 @@ class CoffeeViewModel @Inject constructor(
     private var currentSearch: String = ""
 
     init {
-        // Try fetching coffees at startup
         viewModelScope.launch {
             repository.fetchHotCoffees()
             repository.fetchColdCoffees()
         }
 
-        // Always observe cached coffees
         viewModelScope.launch {
             repository.getCachedCoffees().collect { list ->
                 _coffeeList.value = applyFilters(list)

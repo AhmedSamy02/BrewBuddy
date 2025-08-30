@@ -38,7 +38,6 @@ import kotlinx.coroutines.launch
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
 
-   // private lateinit var viewModel: EnterNameViewModel
     private val viewModel: EnterNameViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,9 +77,7 @@ class MainFragment : Fragment() {
 
 
 
-       // val userName = "John Smith"
 
-        // Handle window insets for the main app bar
         ViewCompat.setOnApplyWindowInsetsListener(binding.mainAppBar) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(
@@ -92,7 +89,6 @@ class MainFragment : Fragment() {
             insets
         }
 
-        // Handle window insets for the bottom navigation
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(
@@ -108,7 +104,6 @@ class MainFragment : Fragment() {
                 .replace(R.id.main_fragment_container_view, HomeFragment())
                 .commit()
         }
-//        binding.tvMainAppBarTitle.text="Good day, $userName"
 
 
         val topAppBar = binding.mainAppBar
@@ -116,6 +111,7 @@ class MainFragment : Fragment() {
             when (it.itemId) {
                 R.id.main_menu_logoutBtn -> {
                     viewModel.logout()
+                    Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.toEnterNameFragment)
                     true
                 }
@@ -131,7 +127,6 @@ class MainFragment : Fragment() {
             when (it.itemId) {
                 R.id.home_nav_bar_item -> {
                     val getName = viewModel.userName.value ?: "Guest"
-                    // Todo: Add here user name
                     binding.tvMainAppBarTitle.text = "Good day, $getName"
                     childFragmentManager.beginTransaction()
                         .replace(R.id.main_fragment_container_view, HomeFragment())
@@ -164,24 +159,13 @@ class MainFragment : Fragment() {
                     true
                 }
 
-              //  else -> true
                 else -> false
             }
         }
-       // super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.main_menu_logoutBtn -> {
-                viewModel.logout()
-                Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT)
-                    .show()
-                findNavController().navigate(R.id.toEnterNameFragment)
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
+        // Logout is handled in topAppBar.setOnMenuItemClickListener above
+        return super.onOptionsItemSelected(item)
     }
 }

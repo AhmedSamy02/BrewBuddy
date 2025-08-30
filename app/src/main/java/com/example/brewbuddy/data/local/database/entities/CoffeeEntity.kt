@@ -10,8 +10,8 @@ data class CoffeeEntity(
     val title: String,
     val description: String,
     val imageUrl: String,
-    val ingredients: String, // comma separated
+    val ingredients: String,
     val price: Double,
-    val category: String, // "HOT" or "COLD"
+    val category: String,
     val isFavorite: Boolean = false
 )

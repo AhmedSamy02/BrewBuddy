@@ -67,6 +67,20 @@ class PaymentFragment : Fragment() {
         }
 
         binding.btnPlaceOrder.setOnClickListener {
+            // Check if address is entered before allowing order
+            if (!viewModel.hasAddress()) {
+                // Show message that address is required
+                android.widget.Toast.makeText(
+                    requireContext(), 
+                    "Please add a delivery address before placing your order", 
+                    android.widget.Toast.LENGTH_LONG
+                ).show()
+                // Optionally open address dialog
+                showAddressDialog()
+                return@setOnClickListener
+            }
+            
+            // Proceed with existing order logic (unchanged)
             viewModel.placeOrder()
             showSuccessDialog()
         }
@@ -111,6 +125,15 @@ class PaymentFragment : Fragment() {
         binding.totalPrice.text = "Rp ${String.format("%.0f", state.totalAmount)}"
 
         binding.tvNoAddress.text = state.deliveryAddress
+        
+        // Visual indication when no address is set (without affecting database operations)
+        if (!viewModel.hasAddress()) {
+            binding.tvNoAddress.setTextColor(resources.getColor(android.R.color.holo_red_dark, null))
+            binding.btnPlaceOrder.alpha = 0.6f // Make button appear disabled
+        } else {
+            binding.tvNoAddress.setTextColor(resources.getColor(android.R.color.black, null))
+            binding.btnPlaceOrder.alpha = 1.0f // Make button appear enabled
+        }
 
         if (state.orderPlaced) {
             findNavController().navigateUp()
@@ -144,6 +167,8 @@ class PaymentFragment : Fragment() {
 
             if (streetAddress.isNotEmpty() && city.isNotEmpty()) {
                 viewModel.saveAddress(streetAddress, city,  notes)
+                // Refresh UI to update address display and button state
+                updateUI(viewModel.uiState.value)
                 dialog.dismiss()
             } else {
                 if (streetAddress.isEmpty()) {

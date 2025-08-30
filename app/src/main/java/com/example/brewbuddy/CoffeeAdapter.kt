@@ -41,10 +41,8 @@ class CoffeeAdapter(
             .transition(withCrossFade(300))
             .into(holder.coffeeImage)
 
-        // Set click listener for the entire item
         holder.itemView.setOnClickListener { onClick(coffee) }
         
-        // Optional: Set click listener for the add button
         holder.addButton.setOnClickListener { onClick(coffee) }
     }
 

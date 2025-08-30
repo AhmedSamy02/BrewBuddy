@@ -25,7 +25,9 @@
         tools:layout="@layout/entername_screen" >
         <action
             android:id="@+id/toMainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -51,7 +53,9 @@
             app:destination="@id/detailsFragment" />
         <action
             android:id="@+id/toEnterNameFragment"
-            app:destination="@id/enterNameFragment" />
+            app:destination="@id/enterNameFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 
 

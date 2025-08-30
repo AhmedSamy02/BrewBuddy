@@ -12,12 +12,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Enable edge-to-edge display
         WindowCompat.setDecorFitsSystemWindows(window, false)
         
         setContentView(R.layout.activity_main)
         
-        // Handle window insets for the main container
         val mainContainer = findViewById<androidx.fragment.app.FragmentContainerView>(R.id.main)
         ViewCompat.setOnApplyWindowInsetsListener(mainContainer) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

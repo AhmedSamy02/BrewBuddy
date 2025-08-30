@@ -24,7 +24,6 @@ class Adapter(private var list: List<OrderHistory>) : RecyclerView.Adapter<Adapt
         var expandedLayout: View = view.findViewById(R.id.expandedLayout)
         var cardView: MaterialCardView = view.findViewById(R.id.cardView)
 
-        // Invoice details TextViews
         var totalPrice: TextView = view.findViewById(R.id.totalPrice_tv)
         var promo: TextView = view.findViewById(R.id.promo_tv)
         var deliveryFee: TextView = view.findViewById(R.id.deliveryFee_tv)
@@ -46,7 +45,7 @@ class Adapter(private var list: List<OrderHistory>) : RecyclerView.Adapter<Adapt
         holder.orderName.text = item.title
         holder.date.text = item.date
 
-        holder.totalPrice.text = "${item.totalPrice} RP"
+        holder.totalPrice.text = " ${String.format("%.3f", item.totalPrice)} RP"
         holder.promo.text = "-${item.promo} RP"
         holder.deliveryFee.text = "${item.deliveryFee} RP"
         holder.packagingFee.text = "${item.packagingFee} RP"
@@ -58,7 +57,6 @@ class Adapter(private var list: List<OrderHistory>) : RecyclerView.Adapter<Adapt
             .error(R.drawable.sample)
             .into(holder.imageView)
 
-        // Handle expand/collapse
         val isExpanded = position == expandedPosition
         holder.expandedLayout.visibility = if (isExpanded) View.VISIBLE else View.GONE
         holder.detailsText.text = if (isExpanded) context.getString(R.string.hide_details)
@@ -71,7 +69,6 @@ class Adapter(private var list: List<OrderHistory>) : RecyclerView.Adapter<Adapt
             notifyItemChanged(position)
         }
 
-        // Optional: Add click listener to the entire card
         holder.cardView.setOnClickListener {
             val previousExpanded = expandedPosition
             expandedPosition = if (isExpanded) -1 else position
