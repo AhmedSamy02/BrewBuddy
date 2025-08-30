@@ -49,5 +49,8 @@
         <argument
             android:name="totalAmount"
             app:argType="float" />
+        <argument
+            android:name="coffeeImage"
+            app:argType="string" />
     </fragment>
 </navigation>

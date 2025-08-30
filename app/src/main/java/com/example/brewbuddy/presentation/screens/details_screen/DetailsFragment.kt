@@ -137,7 +137,8 @@ class DetailsFragment : Fragment() {
                     coffeeName = it.title,
                     coffeePrice = it.price.toFloat(),
                     quantity = quantity,
-                    totalAmount = (it.price * quantity).toFloat()
+                    totalAmount = (it.price * quantity).toFloat(),
+                    coffeeImage = it.image
                 )
                 findNavController().navigate(action)
             } catch (e: Exception) {
@@ -148,6 +149,7 @@ class DetailsFragment : Fragment() {
                     putFloat("coffeePrice", it.price.toFloat())
                     putInt("quantity", quantity)
                     putFloat("totalAmount", (it.price * quantity).toFloat())
+                    putString("coffeeImage", it.image)
                 }
                 findNavController().navigate(R.id.action_detailsFragment_to_paymentFragment, bundle)
             }

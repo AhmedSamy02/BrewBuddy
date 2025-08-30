@@ -3,27 +3,36 @@ package com.example.brewbuddy.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.brewbuddy.data.local.AddressPreferences
+import com.example.brewbuddy.data.local.database.entities.OrderHistory
+import com.example.brewbuddy.data.repository.impl.OrderHistoryRepositoryImp
+import com.example.brewbuddy.presentation.viewmodels.OrderHistoryViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class PaymentViewModel @Inject constructor(
-    private val addressPreferences: AddressPreferences
+    private val addressPreferences: AddressPreferences,
+    private val orderHistoryRepositoryImp: OrderHistoryRepositoryImp
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PaymentUiState())
     val uiState: StateFlow<PaymentUiState> = _uiState.asStateFlow()
+
 
     fun setPaymentData(
         coffeeId: Int,
         coffeeName: String,
         coffeePrice: Double,
         quantity: Int,
-        totalAmount: Double
+        totalAmount: Double,
+        imageUrl: String
     ) {
         android.util.Log.d("PaymentViewModel", "Setting payment data - ID: $coffeeId, Name: $coffeeName, Price: $coffeePrice, Quantity: $quantity")
 
@@ -41,7 +50,8 @@ class PaymentViewModel @Inject constructor(
             deliveryFee = deliveryFee,
             packagingFee = packagingFee,
             promoDiscount = promoDiscount,
-            totalAmount = finalTotal
+            totalAmount = finalTotal,
+            imageUrl = imageUrl,
         )
 
         android.util.Log.d("PaymentViewModel", "Updated UI state - Name: ${_uiState.value.coffeeName}, Price: ${_uiState.value.coffeePrice}, Total: ${_uiState.value.totalAmount}")
@@ -52,10 +62,13 @@ class PaymentViewModel @Inject constructor(
     fun placeOrder() {
         viewModelScope.launch {
             try {
-
                 _uiState.value = _uiState.value.copy(
                     isLoading = true
                 )
+                val orderHistory = createOrderHistoryFromCurrentState()
+
+                orderHistoryRepositoryImp.addOrder(orderHistory)
+
                 kotlinx.coroutines.delay(1000)
 
                 _uiState.value = _uiState.value.copy(
@@ -70,6 +83,7 @@ class PaymentViewModel @Inject constructor(
             }
         }
     }
+
 
     fun clearError() {
         _uiState.value = _uiState.value.copy(error = null)
@@ -90,6 +104,19 @@ class PaymentViewModel @Inject constructor(
     fun hasAddress(): Boolean {
         return addressPreferences.hasAddress()
     }
+    private fun createOrderHistoryFromCurrentState(): OrderHistory {
+        val dateFormat = SimpleDateFormat("dd/MM", Locale.getDefault())
+        val currentDate = dateFormat.format(Date())
+
+        return OrderHistory(
+            coffeeId = _uiState.value.coffeeId,
+            title = _uiState.value.coffeeName,
+            image = _uiState.value.imageUrl,
+            date = currentDate,
+            quantity = _uiState.value.quantity,
+            invoiceId = 1
+        )
+    }
 }
 
 data class PaymentUiState(
@@ -104,5 +131,6 @@ data class PaymentUiState(
     val deliveryAddress: String = "No saved address",
     val isLoading: Boolean = false,
     val orderPlaced: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val imageUrl:String=""
 )

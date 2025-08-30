@@ -19,17 +19,17 @@ class OrderHistoryViewModel @Inject constructor(
     private val _orders = MutableStateFlow<List<OrderHistory>>(emptyList())
     val orders: StateFlow<List<OrderHistory>> = _orders.asStateFlow()
 
-    private val _isRecentView = MutableStateFlow(true) // Default: Recent view
+    private val _isRecentView = MutableStateFlow(true)
     val isRecentView: StateFlow<Boolean> = _isRecentView.asStateFlow()
 
     init {
-        loadRecentOrders() // Load recent orders by default
+        loadRecentOrders()
     }
 
     fun addOrder(order: OrderHistory) {
         viewModelScope.launch {
             repository.addOrder(order)
-            reloadCurrentView() // Reload current view after adding new order
+            reloadCurrentView()
         }
     }
 

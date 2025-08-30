@@ -42,7 +42,7 @@ class OrderFragment : Fragment() {
         setupRecyclerView()
         setupObservers()
         setupSegmentButton()
-        insertMockData()
+       // insertMockData()
     }
 
     private fun setupSegmentButton() {
