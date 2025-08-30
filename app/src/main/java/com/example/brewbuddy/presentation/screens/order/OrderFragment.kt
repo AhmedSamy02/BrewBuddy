@@ -1,60 +1,140 @@
 package com.example.brewbuddy.presentation.screens.order
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.brewbuddy.R
+import com.example.brewbuddy.data.local.database.entities.OrderHistory
+import com.example.brewbuddy.databinding.FragmentOrderBinding
+import com.example.brewbuddy.presentation.viewmodels.OrderHistoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import org.geeksforgeeks.demo.Adapter
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [OrderFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class OrderFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentOrderBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var adapter: Adapter
+    private val viewModel: OrderHistoryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false)
+    ): View {
+        _binding = FragmentOrderBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+        setupObservers()
+        setupSegmentButton()
+        insertMockData()
+    }
+
+    private fun setupSegmentButton() {
+        // Set initial state to Recent
+        binding.segmentGroup.check(R.id.btn_recent)
+
+        // Handle segment changes
+        binding.segmentGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btn_recent -> viewModel.loadRecentOrders()
+                    R.id.btn_past -> viewModel.loadPastOrders()
+                }
+            }
+        }
+    }
+
+    private fun setupObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.orders.collect { orders ->
+                adapter.updateList(orders)
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = Adapter(emptyList())
+        binding.recView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@OrderFragment.adapter
+        }
+    }
+
+    private fun insertMockData() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Check if we need to insert mock data
+            val currentOrders = viewModel.orders.value
+            if (currentOrders.isEmpty()) {
+                val mockOrders = createMockOrders()
+                mockOrders.forEach { order ->
+                    viewModel.addOrder(order)
+                }
+            }
+        }
+    }
+
+    private fun createMockOrders(): List<OrderHistory> {
+        val dateFormat = SimpleDateFormat("MM/dd", Locale.getDefault())
+        val currentTime = Date()
+
+        return listOf(
+            OrderHistory(
+                coffeeId = 1,
+                title = "Espresso",
+                image = "https://example.com/espresso.jpg",
+                date = dateFormat.format(currentTime),
+                quantity = 2,
+                invoiceId = UUID.randomUUID().hashCode()
+            ),
+            OrderHistory(
+                coffeeId = 2,
+                title = "Cappuccino",
+                image = "https://example.com/cappuccino.jpg",
+                date = dateFormat.format(Date(currentTime.time - 86400000)),
+                quantity = 1,
+                invoiceId = UUID.randomUUID().hashCode()
+            ),
+            OrderHistory(
+                coffeeId = 3,
+                title = "Latte",
+                image = "https://example.com/latte.jpg",
+                date = dateFormat.format(Date(currentTime.time - 172800000)),
+                quantity = 3,
+                invoiceId = UUID.randomUUID().hashCode()
+            ),
+            OrderHistory(
+                coffeeId = 4,
+                title = "Mocha",
+                image = "https://example.com/mocha.jpg",
+                date = dateFormat.format(Date(currentTime.time - 259200000)),
+                quantity = 1,
+                invoiceId = UUID.randomUUID().hashCode()
+            ),
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OrderFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OrderFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = OrderFragment()
     }
 }

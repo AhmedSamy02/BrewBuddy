@@ -3,6 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    id ("kotlin-kapt")
+
+    id ("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
@@ -36,10 +41,16 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
+
     }
 }
 
 dependencies {
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0") 
+    kapt ("com.github.bumptech.glide:compiler:4.16.0")
     // Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -47,11 +58,11 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.fragment.ktx)
-    
+
     // Lifecycle & ViewModel
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    
+
     // Room
     implementation(libs.androidx.room.runtime.v261)
     implementation(libs.androidx.room.ktx)
@@ -59,21 +70,24 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     ksp(libs.androidx.room.compiler.v261)
 
+<<<<<<< HEAD
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     
+=======
+>>>>>>> origin/Dev
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
-    
+
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
-    
+
     // Retrofit & Networking
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -82,4 +96,8 @@ dependencies {
 
 
 
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 }

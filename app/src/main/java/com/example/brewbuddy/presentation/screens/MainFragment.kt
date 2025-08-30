@@ -7,10 +7,17 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Toast
+
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.brewbuddy.R
 import com.example.brewbuddy.data.repository.impl.UserRepositoryImpl
@@ -25,16 +32,18 @@ import com.example.brewbuddy.presentation.screens.home.HomeFragment
 import com.example.brewbuddy.presentation.screens.order.OrderFragment
 import com.example.brewbuddy.presentation.viewmodel.EnterNameViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
+
    // private lateinit var viewModel: EnterNameViewModel
     private val viewModel: EnterNameViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,17 +67,47 @@ class MainFragment : Fragment() {
 //        viewModel.getName()
 
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.userName.collect { name ->
-                val displayName = name ?: "Guest"
-                binding.tvMainAppBarTitle.text = "Good day, $displayName"
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userName.collect { name ->
+                    val displayName = name ?: "Guest"
+                    binding.tvMainAppBarTitle.text = "Good day, $displayName"
+                }
             }
         }
 
-//        val userName = "John Smith"
-        childFragmentManager.beginTransaction()
-            .replace(R.id.main_fragment_container_view, HomeFragment())
-            .commit()
+
+
+       // val userName = "John Smith"
+
+        // Handle window insets for the main app bar
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainAppBar) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                systemBars.top,
+                view.paddingRight,
+                view.paddingBottom
+            )
+            insets
+        }
+
+        // Handle window insets for the bottom navigation
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                systemBars.bottom
+            )
+            insets
+        }
+        if (savedInstanceState == null) {
+            childFragmentManager.beginTransaction()
+                .replace(R.id.main_fragment_container_view, HomeFragment())
+                .commit()
+        }
 //        binding.tvMainAppBarTitle.text="Good day, $userName"
 
 
@@ -82,7 +121,7 @@ class MainFragment : Fragment() {
                 }
 
                 else -> {
-                    Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Under Development", Toast.LENGTH_SHORT).show()
                     false
                 }
             }
@@ -129,7 +168,7 @@ class MainFragment : Fragment() {
                 else -> false
             }
         }
-        super.onViewCreated(view, savedInstanceState)
+       // super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

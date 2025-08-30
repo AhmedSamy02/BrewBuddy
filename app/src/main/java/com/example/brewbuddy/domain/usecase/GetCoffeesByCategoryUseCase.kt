@@ -5,7 +5,9 @@ import com.example.brewbuddy.domain.model.CoffeeCategory
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class GetCoffeesByCategoryUseCase @Inject constructor(
     private val coffeeRepository: CoffeeRepository
 ) {

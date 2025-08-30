@@ -2,13 +2,18 @@ package com.example.brewbuddy.di
 
 import com.example.brewbuddy.data.repository.impl.FavoritesRepositoryImpl
 import com.example.brewbuddy.data.repository.impl.CoffeeRepositoryImpl
+<<<<<<< HEAD
 import com.example.brewbuddy.data.repository.impl.UserRepositoryImpl
+=======
+import com.example.brewbuddy.data.repository.impl.OrderHistoryRepositoryImp
+>>>>>>> origin/Dev
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import com.example.brewbuddy.domain.repository.UserRepository
 import com.example.brewbuddy.domain.usecase.DeleteUserNameUseCase
 import com.example.brewbuddy.domain.usecase.GetUserNameUseCase
 import com.example.brewbuddy.domain.usecase.SaveUserNameUseCase
 import com.example.brewbuddy.domain.repository.FavoritesRepository
+import com.example.brewbuddy.domain.repository.OrderHistoryRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -61,6 +66,12 @@ abstract class RepositoryModule {
     abstract fun  bindFavoriteRepository(
         favoritesRepositoryImpl: FavoritesRepositoryImpl
     ): FavoritesRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindOrderHistoryRepository(
+        orderHistoryRepositoryImp: OrderHistoryRepositoryImp
+    ): OrderHistoryRepository
 
     // TODO: Add other repository bindings
 
