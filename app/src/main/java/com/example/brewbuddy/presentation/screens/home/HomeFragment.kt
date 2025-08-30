@@ -6,14 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.brewbuddy.R
 import com.example.brewbuddy.databinding.FragmentHomeBinding
-import com.example.brewbuddy.presentation.screens.MainFragmentDirections
 import com.example.brewbuddy.presentation.screens.drink_menu.DrinkMenuFragment
 import com.example.brewbuddy.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,8 +58,10 @@ class HomeFragment : Fragment() {
                 binding.rvWeekRecommendations.visibility = View.VISIBLE
                 val adapter =
                     WeekRecommendationRecyclerViewAdapter(viewModel.uiState.value.recommendations) {
-                        val action = MainFragmentDirections.actionMainFragmentToDetailsFragment(it)
-                        findNavController().navigate(action)
+                        val bundle = Bundle().apply {
+                            putParcelable("coffee", it)
+                        }
+                        requireActivity().findNavController(R.id.main).navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
                     }
                 binding.rvWeekRecommendations.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -81,9 +81,10 @@ class HomeFragment : Fragment() {
                 .commit()
         }
         binding.cvBestSeller.setOnClickListener {
-            val action =
-                MainFragmentDirections.actionMainFragmentToDetailsFragment(viewModel.uiState.value.bestSeller!!)
-            findNavController().navigate(action)
+            val bundle = Bundle().apply {
+                putParcelable("coffee", viewModel.uiState.value.bestSeller!!)
+            }
+            requireActivity().findNavController(R.id.main).navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
         }
     }
 

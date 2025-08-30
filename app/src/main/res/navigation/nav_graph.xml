@@ -3,7 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.brewbuddy.presentation.screens.Welcome.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/welcome_screen" >
+        <action
+            android:id="@+id/toMainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/toEnterNameFragment"
+            app:destination="@id/enterNameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/enterNameFragment"
+        android:name="com.example.brewbuddy.presentation.screens.entername.EnterNameFragment"
+        android:label="fragment_enter_name"
+        tools:layout="@layout/entername_screen" >
+        <action
+            android:id="@+id/toMainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/detailsFragment"
@@ -26,6 +49,9 @@
         <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/toEnterNameFragment"
+            app:destination="@id/enterNameFragment" />
     </fragment>
 
 
