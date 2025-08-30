@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.brewbuddy.R
 import com.example.brewbuddy.databinding.FragmentMainBinding
@@ -16,10 +18,7 @@ import com.example.brewbuddy.presentation.screens.order.OrderFragment
 
 class MainFragment : Fragment() {
     lateinit var binding: FragmentMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +31,31 @@ class MainFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val userName = "John Smith"
+        
+        // Handle window insets for the main app bar
+        ViewCompat.setOnApplyWindowInsetsListener(binding.mainAppBar) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                systemBars.top,
+                view.paddingRight,
+                view.paddingBottom
+            )
+            insets
+        }
+        
+        // Handle window insets for the bottom navigation
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                view.paddingLeft,
+                view.paddingTop,
+                view.paddingRight,
+                systemBars.bottom
+            )
+            insets
+        }
+        
         childFragmentManager.beginTransaction()
             .replace(R.id.main_fragment_container_view, HomeFragment())
             .commit()

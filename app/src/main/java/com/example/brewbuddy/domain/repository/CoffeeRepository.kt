@@ -10,4 +10,6 @@ interface CoffeeRepository {
     fun searchCoffees(query: String): Flow<List<Coffee>>
     suspend fun refreshCoffees()
     suspend fun toggleFavorite(coffeeId: Int, isFavorite: Boolean)
+    suspend fun getBestSellerCoffee(): Coffee
+    suspend fun getWeekRecommendation(): List<Coffee>
 }
