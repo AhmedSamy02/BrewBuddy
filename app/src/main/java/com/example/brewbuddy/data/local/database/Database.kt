@@ -12,7 +12,7 @@ import com.example.brewbuddy.data.local.database.entities.OrderHistory
 @Database(
     entities = [FavEntity::class, OrderHistory::class , CoffeeEntity::class],
     version = 3,
-    exportSchema = true
+    exportSchema = false
 )
 abstract class BrewBuddyDatabase : RoomDatabase() {
     abstract fun favDao() : FavoritesDao

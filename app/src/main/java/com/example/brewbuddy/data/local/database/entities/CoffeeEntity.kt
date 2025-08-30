@@ -12,5 +12,6 @@ data class CoffeeEntity(
     val imageUrl: String,
     val ingredients: String, // comma separated
     val price: Double,
-    val category: String // "HOT" or "COLD"
+    val category: String, // "HOT" or "COLD"
+    val isFavorite: Boolean = false
 )

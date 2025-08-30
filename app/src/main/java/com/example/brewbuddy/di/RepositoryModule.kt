@@ -2,6 +2,8 @@ package com.example.brewbuddy.di
 
 import com.example.brewbuddy.data.repository.impl.FavoritesRepositoryImpl
 import com.example.brewbuddy.data.repository.impl.CoffeeRepositoryImpl
+import com.example.brewbuddy.data.repository.impl.UserRepositoryImpl
+import com.example.brewbuddy.data.repository.impl.OrderHistoryRepositoryImp
 import com.example.brewbuddy.domain.repository.CoffeeRepository
 import com.example.brewbuddy.domain.repository.UserRepository
 import com.example.brewbuddy.domain.usecase.DeleteUserNameUseCase
@@ -27,34 +29,10 @@ abstract class RepositoryModule {
         impl: CoffeeRepositoryImpl
     ): CoffeeRepository
     @Binds
-    abstract  fun bindUserRepository(
+    @Singleton
+    abstract fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
-
-
-
-    @Module
-    @InstallIn(ViewModelComponent::class)
-    object UseCaseModule {
-
-        @Provides
-        fun provideGetUserNameUseCase(userRepository: UserRepository): GetUserNameUseCase {
-            return GetUserNameUseCase(userRepository)
-        }
-
-        @Provides
-        fun provideSaveUserNameUseCase(userRepository: UserRepository): SaveUserNameUseCase {
-            return SaveUserNameUseCase(userRepository)
-        }
-
-        @Provides
-        fun provideDeleteUserNameUseCase(userRepository: UserRepository): DeleteUserNameUseCase {
-            return DeleteUserNameUseCase(userRepository)
-        }
-    }
-
-
-
 
     @Binds
     @Singleton
@@ -67,7 +45,5 @@ abstract class RepositoryModule {
     abstract fun bindOrderHistoryRepository(
         orderHistoryRepositoryImp: OrderHistoryRepositoryImp
     ): OrderHistoryRepository
-
-    // TODO: Add other repository bindings
 
 }

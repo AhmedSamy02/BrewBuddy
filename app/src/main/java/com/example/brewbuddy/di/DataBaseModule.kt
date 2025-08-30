@@ -12,6 +12,7 @@ import dagger.hilt.components.SingletonComponent
 import com.example.brewbuddy.data.local.database.BrewBuddyDatabase
 import com.example.brewbuddy.data.local.database.dao.CoffeeDao
 import com.example.brewbuddy.data.local.database.dao.FavoritesDao
+import com.example.brewbuddy.data.local.database.dao.OrderHistoryDao
 import javax.inject.Singleton
 
 @Module
@@ -31,11 +32,11 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideFavoriteDao(database: BrewBuddyDatabase): FavoritesDao = database.favDao()
+    fun provideFavoritesDao(database: BrewBuddyDatabase): FavoritesDao = database.favDao()
+    
     @Provides
     fun provideOrderHistoryDao(database: BrewBuddyDatabase): OrderHistoryDao = database.orderHistoryDao()
-    fun provideCoffeeDao(db: BrewBuddyDatabase): CoffeeDao = db.coffeeDao()
-
+    
     @Provides
-    fun provideFavoritesDao(db: BrewBuddyDatabase): FavoritesDao = db.favDao()
+    fun provideCoffeeDao(database: BrewBuddyDatabase): CoffeeDao = database.coffeeDao()
 }

@@ -8,6 +8,6 @@ data class CoffeeApiModel(
     val image: String
 ) {
     val price: Double
-        get() = (3..7).random() + 0.99
+        get() = (3 + (id % 5)) + 0.99  // Consistent price based on coffee ID
 }
 

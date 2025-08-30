@@ -7,6 +7,7 @@ import com.example.brewbuddy.domain.usecase.favorites.AddFavoriteUseCase
 import com.example.brewbuddy.domain.usecase.favorites.FavoriteUseCase
 import com.example.brewbuddy.domain.usecase.favorites.GetFavoriteUseCase
 import com.example.brewbuddy.domain.usecase.favorites.RemoveFavoriteUseCase
+import com.example.brewbuddy.domain.usecase.home.GetBestSellerCoffeeUseCase
 import com.example.brewbuddy.domain.usecase.home.GetWeekRecommendationUseCase
 import dagger.Module
 import dagger.Provides

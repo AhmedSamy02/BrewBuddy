@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.brewbuddy.data.local.database.entities.CoffeeEntity
 
 class CoffeeAdapter(
@@ -29,17 +30,29 @@ class CoffeeAdapter(
     override fun onBindViewHolder(holder: CoffeeViewHolder, position: Int) {
         val coffee = coffeeList[position]
         holder.coffeeName.text = coffee.title
-        holder.coffeePrice.text = "Price: $${coffee.price}"
+        holder.coffeeDescription.text = coffee.description
+        holder.coffeePrice.text = "Rp ${String.format("%.0f", coffee.price )}"
+        
+        // Load coffee image using Glide
         Glide.with(holder.itemView.context)
             .load(coffee.imageUrl)
+            .placeholder(R.drawable.coffee_image_placeholder)
+            .error(R.drawable.coffee_image_placeholder)
+            .transition(withCrossFade(300))
             .into(holder.coffeeImage)
 
+        // Set click listener for the entire item
         holder.itemView.setOnClickListener { onClick(coffee) }
+        
+        // Optional: Set click listener for the add button
+        holder.addButton.setOnClickListener { onClick(coffee) }
     }
 
     class CoffeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val coffeeImage: ImageView = itemView.findViewById(R.id.coffeeImage)
         val coffeeName: TextView = itemView.findViewById(R.id.coffeeName)
+        val coffeeDescription: TextView = itemView.findViewById(R.id.coffeeDescription)
         val coffeePrice: TextView = itemView.findViewById(R.id.coffeePrice)
+        val addButton: ImageView = itemView.findViewById(R.id.addButton)
     }
 }

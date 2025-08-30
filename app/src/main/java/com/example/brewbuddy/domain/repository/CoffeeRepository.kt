@@ -1,5 +1,6 @@
 package com.example.brewbuddy.domain.repository
 
+import com.example.brewbuddy.data.local.database.entities.CoffeeEntity
 import com.example.brewbuddy.domain.model.Coffee
 import com.example.brewbuddy.domain.model.CoffeeCategory
 import kotlinx.coroutines.flow.Flow
