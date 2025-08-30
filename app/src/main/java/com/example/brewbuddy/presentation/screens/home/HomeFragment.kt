@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.brewbuddy.R
 import com.example.brewbuddy.databinding.FragmentHomeBinding
-import com.example.brewbuddy.presentation.screens.drink_menu.DrinkMenuFragment
+import com.example.brewbuddy.presentation.screens.menu.DrinkMenuFragment
 import com.example.brewbuddy.presentation.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -81,10 +81,13 @@ class HomeFragment : Fragment() {
                 .commit()
         }
         binding.cvBestSeller.setOnClickListener {
-            val bundle = Bundle().apply {
-                putParcelable("coffee", viewModel.uiState.value.bestSeller!!)
+            val bestSeller = viewModel.uiState.value.bestSeller
+            if (bestSeller != null) {
+                val bundle = Bundle().apply {
+                    putParcelable("coffee", bestSeller)
+                }
+                requireActivity().findNavController(R.id.main).navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
             }
-            requireActivity().findNavController(R.id.main).navigate(R.id.action_mainFragment_to_detailsFragment, bundle)
         }
     }
 

@@ -26,42 +26,18 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindCoffeeRepository(
-        coffeeRepositoryImpl: CoffeeRepositoryImpl
+        impl: CoffeeRepositoryImpl
     ): CoffeeRepository
     @Binds
-    abstract  fun bindUserRepository(
+    @Singleton
+    abstract fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
 
-
-
-    @Module
-    @InstallIn(ViewModelComponent::class)
-    object UseCaseModule {
-
-        @Provides
-        fun provideGetUserNameUseCase(userRepository: UserRepository): GetUserNameUseCase {
-            return GetUserNameUseCase(userRepository)
-        }
-
-        @Provides
-        fun provideSaveUserNameUseCase(userRepository: UserRepository): SaveUserNameUseCase {
-            return SaveUserNameUseCase(userRepository)
-        }
-
-        @Provides
-        fun provideDeleteUserNameUseCase(userRepository: UserRepository): DeleteUserNameUseCase {
-            return DeleteUserNameUseCase(userRepository)
-        }
-    }
-
-
-
-
     @Binds
     @Singleton
-    abstract fun  bindFavoriteRepository(
-        favoritesRepositoryImpl: FavoritesRepositoryImpl
+    abstract fun bindFavoritesRepository(
+        impl: FavoritesRepositoryImpl
     ): FavoritesRepository
 
     @Binds
@@ -69,7 +45,5 @@ abstract class RepositoryModule {
     abstract fun bindOrderHistoryRepository(
         orderHistoryRepositoryImp: OrderHistoryRepositoryImp
     ): OrderHistoryRepository
-
-    // TODO: Add other repository bindings
 
 }

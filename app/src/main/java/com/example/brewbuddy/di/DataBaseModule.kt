@@ -10,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import com.example.brewbuddy.data.local.database.BrewBuddyDatabase
+import com.example.brewbuddy.data.local.database.dao.CoffeeDao
 import com.example.brewbuddy.data.local.database.dao.FavoritesDao
 import com.example.brewbuddy.data.local.database.dao.OrderHistoryDao
 import javax.inject.Singleton
@@ -31,7 +32,11 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideFavoriteDao(database: BrewBuddyDatabase): FavoritesDao = database.favDao()
+    fun provideFavoritesDao(database: BrewBuddyDatabase): FavoritesDao = database.favDao()
+    
     @Provides
     fun provideOrderHistoryDao(database: BrewBuddyDatabase): OrderHistoryDao = database.orderHistoryDao()
+    
+    @Provides
+    fun provideCoffeeDao(database: BrewBuddyDatabase): CoffeeDao = database.coffeeDao()
 }

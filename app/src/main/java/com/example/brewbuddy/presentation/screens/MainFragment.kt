@@ -26,7 +26,7 @@ import com.example.brewbuddy.domain.usecase.DeleteUserNameUseCase
 import com.example.brewbuddy.domain.usecase.GetUserNameUseCase
 import com.example.brewbuddy.domain.usecase.SaveUserNameUseCase
 import com.example.brewbuddy.presentation.screens.details_screen.DetailsFragment
-import com.example.brewbuddy.presentation.screens.drink_menu.DrinkMenuFragment
+import com.example.brewbuddy.presentation.screens.menu.DrinkMenuFragment
 import com.example.brewbuddy.presentation.screens.favorites.FavoritesFragment
 import com.example.brewbuddy.presentation.screens.home.HomeFragment
 import com.example.brewbuddy.presentation.screens.order.OrderFragment
