@@ -41,7 +41,7 @@ class AddressPreferences @Inject constructor(
             Address(
                 streetAddress = sharedPreferences.getString(KEY_STREET_ADDRESS, "") ?: "",
                 city = sharedPreferences.getString(KEY_CITY, "") ?: "",
-                postalCode = "", // No longer used but keeping for compatibility
+                postalCode = "",
                 notes = sharedPreferences.getString(KEY_NOTES, "") ?: ""
             )
         } else {
@@ -72,7 +72,6 @@ class AddressPreferences @Inject constructor(
                 if (address.city.isNotEmpty()) {
                     append(", ${address.city}")
                 }
-                // Postal code no longer used
             }
         } else {
             "No saved address"

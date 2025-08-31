@@ -77,7 +77,6 @@ class FavoritesFragment : Fragment() {
         _binding = null
     }
 
-    // Adapter using ViewBinding
     private inner class FavoritesAdapter(
         private val onDelete: (Favorite) -> Unit
     ) : androidx.recyclerview.widget.ListAdapter<Favorite, FavoritesAdapter.FavViewHolder>(

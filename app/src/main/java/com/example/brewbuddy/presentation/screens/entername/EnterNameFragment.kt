@@ -54,6 +54,9 @@ class EnterNameFragment : Fragment() {
 
         val enterNameEditText = view.findViewById<EditText>(R.id.enterNameEditText)
         val saveNameButton = view.findViewById<Button>(R.id.saveNameButton)
+        
+        // Clear the edit text when fragment is created (useful after logout)
+        enterNameEditText.text.clear()
 
 
         saveNameButton.setOnClickListener {
@@ -64,7 +67,6 @@ class EnterNameFragment : Fragment() {
                     .show()
             } else {
                 viewModel.saveName(name)
-               // findNavController().navigate(R.id.toMainFragment)
             }
         }
 

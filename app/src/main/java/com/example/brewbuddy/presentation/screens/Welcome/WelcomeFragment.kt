@@ -30,16 +30,12 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         
         lifecycleScope.launch {
-            // Show welcome screen for a few milliseconds
             delay(2000) // 2 seconds - you can adjust this
             
-            // Check if user has already saved their name
             val savedName = viewModel.userName.value
             if (!savedName.isNullOrBlank()) {
-                // Navigate to main screen if name exists
                 findNavController().navigate(R.id.toMainFragment)
             } else {
-                // Navigate to enter name screen if no name saved
                 findNavController().navigate(R.id.toEnterNameFragment)
             }
         }

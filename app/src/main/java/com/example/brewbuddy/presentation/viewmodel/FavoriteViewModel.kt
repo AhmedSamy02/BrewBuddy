@@ -34,7 +34,6 @@ class FavoriteViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(FavoriteUiState())
     val uiState: StateFlow<FavoriteUiState> = _uiState.asStateFlow()
 
-    // Expose all favorites as StateFlow
     val favorites: StateFlow<List<Favorite>> = getFavoritesUseCase()
         .onStart {
             _uiState.value = _uiState.value.copy(isLoading = true)

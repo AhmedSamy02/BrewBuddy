@@ -27,14 +27,13 @@ class DrinkMenuFragment : Fragment(R.layout.fragment_drink_menu) {
 
     private val viewModel: CoffeeViewModel by viewModels()
     private lateinit var adapter: CoffeeAdapter
-    private var currentSelectedCategory = "COLD" // Default to Cold as shown in UI
+    private var currentSelectedCategory = "COLD"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.coffeeRecyclerView)
         adapter = CoffeeAdapter(emptyList()) { coffeeEntity ->
-            // Convert CoffeeEntity to Coffee for navigation
             val coffee = Coffee(
                 id = coffeeEntity.id,
                 title = coffeeEntity.title,
@@ -46,7 +45,6 @@ class DrinkMenuFragment : Fragment(R.layout.fragment_drink_menu) {
                 isFavorite = coffeeEntity.isFavorite
             )
             
-            // Navigate to details page
             val bundle = Bundle().apply {
                 putParcelable("coffee", coffee)
             }
@@ -63,7 +61,6 @@ class DrinkMenuFragment : Fragment(R.layout.fragment_drink_menu) {
         val coldContainer = view.findViewById<CardView>(R.id.coldButtonContainer)
         val hotContainer = view.findViewById<CardView>(R.id.hotButtonContainer)
 
-        // Set initial category filter
         viewModel.filterByCategory(currentSelectedCategory)
         updateCategoryButtons(btnCold, btnHot, coldContainer, hotContainer)
 
@@ -85,13 +82,11 @@ class DrinkMenuFragment : Fragment(R.layout.fragment_drink_menu) {
     
     private fun updateCategoryButtons(btnCold: TextView, btnHot: TextView, coldContainer: CardView, hotContainer: CardView) {
         if (currentSelectedCategory == "COLD") {
-            // Cold selected
             coldContainer.setCardBackgroundColor(resources.getColor(R.color.secondary , null))
             btnCold.setTextColor(resources.getColor(android.R.color.white, null))
             hotContainer.setCardBackgroundColor(resources.getColor(android.R.color.transparent, null))
             btnHot.setTextColor(resources.getColor(R.color.secondary , null))
         } else {
-            // Hot selected
             hotContainer.setCardBackgroundColor(resources.getColor(R.color.secondary, null))
             btnHot.setTextColor(resources.getColor(android.R.color.white, null))
             coldContainer.setCardBackgroundColor(resources.getColor(android.R.color.transparent, null))
