@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.brewbuddy.R
 import com.example.brewbuddy.databinding.FragmentDetailsBinding
 import com.example.brewbuddy.domain.model.Coffee
@@ -22,6 +27,7 @@ class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private val viewModel: DetailsViewModel by viewModels()
+    private val args: DetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,12 +40,31 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            
+            binding.closeBtn.setPadding(
+                binding.closeBtn.paddingLeft,
+                binding.closeBtn.paddingTop + systemBars.top,
+                binding.closeBtn.paddingRight,
+                binding.closeBtn.paddingBottom
+            )
+            
+            binding.favouriteBtn.setPadding(
+                binding.favouriteBtn.paddingLeft,
+                binding.favouriteBtn.paddingTop + systemBars.top,
+                binding.favouriteBtn.paddingRight,
+                binding.favouriteBtn.paddingBottom
+            )
+            
+            insets
+        }
+
         setupUI()
         observeViewModel()
 
-        // For demonstration, set a sample coffee
-        // In a real app, you would get this from navigation arguments
-        setSampleCoffee()
+        val coffee = args.coffee
+        viewModel.setCoffee(coffee)
     }
 
     private fun setupUI() {
@@ -73,60 +98,56 @@ class DetailsFragment : Fragment() {
     }
 
         private fun updateUI(state: com.example.brewbuddy.presentation.viewmodel.DetailsUiState) {
-        // Update quantity
         binding.tvQuantity.text = state.quantity.toString()
         
-        // Update coffee details
         state.coffee?.let { coffee ->
             binding.productTitle.text = coffee.title
             binding.productDescription.text = coffee.description
             binding.productPrice.text = "Rp ${String.format("%.0f", coffee.price)}"
-            // You would set the image here using an image loading library like Glide or Coil
+            
+            Glide.with(this)
+                .load(coffee.image)
+                .placeholder(R.drawable.coffee_image_placeholder)
+                .transition(withCrossFade(300))
+                .into(binding.productImage)
         }
         
-        // Update favorite button state
         binding.favouriteBtn.isSelected = state.isFavorite
         
-        // Handle navigation to payment
         if (state.shouldNavigateToPayment) {
             navigateToPayment(state.selectedCoffee, state.finalQuantity)
             viewModel.onNavigatedToPayment()
         }
     }
-    
+
     private fun navigateToPayment(coffee: Coffee?, quantity: Int) {
-        // TODO: Navigate to payment screen with coffee and quantity data
         coffee?.let {
-            Toast.makeText(
-                context, 
-                "Navigate to Payment: ${it.title} x$quantity = Rp ${String.format("%.0f", it.price * quantity)}", 
-                Toast.LENGTH_LONG
-            ).show()
-            
-            // Example of how you would navigate using Navigation Component:
-            // val action = DetailsFragmentDirections.actionDetailsToPayment(
-            //     coffeeId = it.id,
-            //     coffeeName = it.title,
-            //     coffeePrice = it.price,
-            //     quantity = quantity,
-            //     totalAmount = it.price * quantity
-            // )
-            // findNavController().navigate(action)
+            try {
+                val action = DetailsFragmentDirections.actionDetailsFragmentToPaymentFragment(
+                    coffeeId = it.id,
+                    coffeeName = it.title,
+                    coffeePrice = it.price.toFloat(),
+                    quantity = quantity,
+                    totalAmount = (it.price * quantity).toFloat(),
+                    coffeeImage = it.image
+                )
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                // Fallback navigation using bundle if directions fail
+                val bundle = Bundle().apply {
+                    putInt("coffeeId", it.id)
+                    putString("coffeeName", it.title)
+                    putFloat("coffeePrice", it.price.toFloat())
+                    putInt("quantity", quantity)
+                    putFloat("totalAmount", (it.price * quantity).toFloat())
+                    putString("coffeeImage", it.image)
+                }
+                findNavController().navigate(R.id.action_detailsFragment_to_paymentFragment, bundle)
+            }
         }
     }
 
 
-    private fun setSampleCoffee() {
-        val sampleCoffee = Coffee(
-            id = 1,
-            title = "Iced Coffee Sweet Heaven",
-            description = "Double espresso with condensed milk, served cold",
-            ingredients = listOf("Espresso", "Condensed Milk", "Ice"),
-            image = "https://images.unsplash.com/photo-1532004491497-ba35c367d634?auto=format&fit=crop&q=80&w=1887&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            price = 20000.0,
-            category = CoffeeCategory.COLD,
-            isFavorite = false
-        )
-        viewModel.setCoffee(sampleCoffee)
-    }
+
+
 }

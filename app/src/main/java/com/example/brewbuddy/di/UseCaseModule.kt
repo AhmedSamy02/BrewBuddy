@@ -7,6 +7,8 @@ import com.example.brewbuddy.domain.usecase.favorites.AddFavoriteUseCase
 import com.example.brewbuddy.domain.usecase.favorites.FavoriteUseCase
 import com.example.brewbuddy.domain.usecase.favorites.GetFavoriteUseCase
 import com.example.brewbuddy.domain.usecase.favorites.RemoveFavoriteUseCase
+import com.example.brewbuddy.domain.usecase.home.GetBestSellerCoffeeUseCase
+import com.example.brewbuddy.domain.usecase.home.GetWeekRecommendationUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,5 +38,17 @@ object UseCaseModule {
             removeFavoriteUseCase = removeFavoriteUseCase ,
             getFavoriteUseCase = getFavoriteUseCase ,
         )
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetBestSellerCoffeeUseCase(repository: CoffeeRepository): GetBestSellerCoffeeUseCase {
+        return GetBestSellerCoffeeUseCase(repository)
+    }
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetWeekRecommendationUseCase(repository: CoffeeRepository): GetWeekRecommendationUseCase {
+        return GetWeekRecommendationUseCase(repository)
     }
 }

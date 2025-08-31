@@ -40,11 +40,9 @@ class DetailsViewModel @Inject constructor(
             viewModelScope.launch {
                 try {
                     if (currentFavoriteState) {
-                        // Remove from favorites
                         favoritesRepository.removeFavorite(coffee.id)
                         _uiState.value = _uiState.value.copy(isFavorite = false)
                     } else {
-                        // Add to favorites
                         val favorite = Favorite(
                             id = coffee.id,
                             name = coffee.title,

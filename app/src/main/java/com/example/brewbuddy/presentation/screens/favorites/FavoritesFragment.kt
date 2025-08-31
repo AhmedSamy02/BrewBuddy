@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.brewbuddy.databinding.FragmentFavoritesBinding
@@ -45,7 +46,7 @@ class FavoritesFragment : Fragment() {
         }
 
         binding.rvFavorites.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(),2)
             adapter = this@FavoritesFragment.adapter
         }
 
@@ -76,7 +77,6 @@ class FavoritesFragment : Fragment() {
         _binding = null
     }
 
-    // Adapter using ViewBinding
     private inner class FavoritesAdapter(
         private val onDelete: (Favorite) -> Unit
     ) : androidx.recyclerview.widget.ListAdapter<Favorite, FavoritesAdapter.FavViewHolder>(
@@ -101,7 +101,7 @@ class FavoritesFragment : Fragment() {
             val fav = getItem(position)
             with(holder.binding) {
                 tvDrinkName.text = fav.name
-                tvDrinkPrice.text = "${fav.priceCents}$"
+                tvDrinkPrice.text = "RP ${fav.priceCents}"
                 ivDrinkImage.load(fav.image) { crossfade(true) }
 
                 ivFavorite.setOnClickListener {
